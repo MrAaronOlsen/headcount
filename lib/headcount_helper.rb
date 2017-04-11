@@ -1,0 +1,11 @@
+require 'pry'
+
+require_relative 'district_repository'
+require_relative 'district'
+require_relative 'enrollment_repository'
+require_relative 'enrollment'
+require_relative 'statewide_test_repository'
+require_relative 'statewide_test'
+require_relative 'economic_profile_repository'
+require_relative 'economic_profile'
+require_relative 'headcount_analyst'
