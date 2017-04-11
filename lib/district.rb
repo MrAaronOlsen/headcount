@@ -1,3 +1,5 @@
+
+
 require_relative 'headcount_helper'
 
 class District
@@ -7,5 +9,4 @@ class District
   def initialize(args)
     @name = args[:name]
   end
-
 end

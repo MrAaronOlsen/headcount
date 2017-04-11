@@ -23,13 +23,18 @@ Use this template to when conducting DTR with your project partners. It's recomm
 
 Any additional questions that you would like to add:
 
+
+
+
+
+
 ### Template for DTR Memo
 
-### Project: Headcount
+Project: Headcount
 
-## Group Member Names:
-  # Aaron Olsen
-  # Marc Fidelman
+Group Member Names:
+Aaron Olsen
+Marc Fidelman
 
 Project Expectations: What does each group member hope to get out of this project?
 
