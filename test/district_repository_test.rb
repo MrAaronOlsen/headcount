@@ -15,11 +15,28 @@ class DistrictRepositoryTest < MiniTest::Test
     assert_equal "YUMA SCHOOL DISTRICT 1", district.name
   end
 
-  def test_it_can_finde_all_matching
+  def test_it_cant_find_by_name
+    dr = DistrictRepository.new
+    dr.load_data({:enrollment => {
+                    :kindergarten => "./data/Kindergartners in full-day program.csv"}})
+
+    assert_nil dr.find_by_name("FRIKINFRACK")
+  end
+
+  def test_it_can_find_all_matching
     dr = DistrictRepository.new
     dr.load_data({:enrollment => {
                     :kindergarten => "./data/Kindergartners in full-day program.csv"}})
 
     assert_equal 7, dr.find_all_matching("WE").count
   end
+
+  def test_it_cant_find_all_matching
+    dr = DistrictRepository.new
+    dr.load_data({:enrollment => {
+                    :kindergarten => "./data/Kindergartners in full-day program.csv"}})
+
+    assert_equal [], dr.find_all_matching("BZYBUG")
+  end
+
 end

@@ -6,7 +6,6 @@ class EnrollmentRepositoryTest < MiniTest::Test
     assert_instance_of EnrollmentRepository, EnrollmentRepository.new
   end
 
-
   def test_it_finds_by_name
     er = EnrollmentRepository.new
     er.load_data({:enrollment => {
@@ -14,6 +13,14 @@ class EnrollmentRepositoryTest < MiniTest::Test
     enrollment = er.find_by_name("YUMA SCHOOL DISTRICT 1")
 
     assert_equal enrollment.name, "YUMA SCHOOL DISTRICT 1"
+  end
+
+  def test_it_cant_find_by_name
+    er = EnrollmentRepository.new
+    er.load_data({:enrollment => {
+                    :kindergarten => "./data/Kindergartners in full-day program.csv"}})
+
+    assert_nil er.find_by_name("FRIKINFRACK")
   end
 
 

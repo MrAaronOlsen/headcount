@@ -14,6 +14,7 @@ class EnrollmentRepository
   end
 
   def find_by_name(name)
+    # nil if name does not exist
     Enrollment.new({:name => name,
                         :kindergarten_participation => collect_kindergarten_data(name)
                         # :highschool => finds_highschool(name)
