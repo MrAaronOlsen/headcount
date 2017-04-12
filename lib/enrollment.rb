@@ -1,8 +1,17 @@
 require_relative 'headcount_helper'
 
-#enrollment class will need multiple collections
-# - one for each level of schooling (2?)
-
 class Enrollment
+
+  def initialize(args)
+    @args = args
+  end
+
+  def kindergarten_participation_by_year
+    @args[:kindergarten_participation]
+  end
+
+  def kindergarten_participation_in_year(year)
+    @args[:kindergarten_participation][year]
+  end
 
 end
