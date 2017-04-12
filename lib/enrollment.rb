@@ -14,4 +14,9 @@ class Enrollment
     @args[:kindergarten_participation][year]
   end
 
+  def name
+    @args[:name]
+  end
+
+
 end
