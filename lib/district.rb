@@ -10,7 +10,7 @@ class District
 
   def initialize(args)
     @name = args[:name]
-    @enrollment = []
+    @enrollment = nil
   end
 
 end

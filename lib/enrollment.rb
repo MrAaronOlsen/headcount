@@ -7,11 +7,11 @@ class Enrollment
   end
 
   def kindergarten_participation_by_year
-    @args[:kindergarten_participation]
+    @args[:kindergarten]
   end
 
   def kindergarten_participation_in_year(year)
-    @args[:kindergarten_participation][year]
+    @args[:kindergarten][year]
   end
 
   def graduation_rate_by_year

@@ -3,46 +3,51 @@ require_relative 'headcount_helper'
 class EnrollmentRepository
 
   def initialize
-    @enrollments = {}
+    @data_sets = {}
+    @enrollments = []
   end
 
   def load_data(args)
-    districts = []
     args[:enrollment].each do |data_set, address|
-      loader = Load.new(address).load_data(:location, :timeframe,
-                                           :dataformat, :data)
-      districts |= loader[1]
-      @enrollments[data_set] = loader[0]
+      loader = Load.new(address).load_data( :location, :timeframe,
+                                            :dataformat, :data )
+
+      @data_sets[data_set] = loader
     end
-    districts
+    build_enrollments
   end
 
   def find_by_name(name)
-    Enrollment.new({:name => name,
-                    :kindergarten_participation =>
-                      collect_data( :name => name,
-                                    :data_set => :kindergarten,
-                                    :column1 => :timeframe,
-                                    :column2 => :data ),
-                    :high_school_graduation =>
-                      collect_data( :name => name,
-                                    :data_set => :high_school_graduation,
-                                    :column1 => :timeframe,
-                                    :column2 => :data )
-                  })
+    @enrollments.find { |enrollment| enrollment.name == name }
   end
 
-  def collect_data(args)
+  def collect_names
+    @data_sets.reduce([]) do |all_names, data_set|
+      all_names |= data_set[1].map { |line| line[:location] }
+    end
+  end
+
+  def build_enrollments
+    names = collect_names
+
+    names.each do |name|
+      enrollment = {}
+      enrollment[:name] = name
+
+      @data_sets.each do |data_name, data_set|
+        enrollment[data_name] = collect_data(name, data_set)
+      end
+      @enrollments << Enrollment.new(enrollment)
+    end
+
+  end
+
+  def collect_data(name, data_set)
     temp = {}
-    binding.pry
-    @enrollments[args[:data_set]].each do |line|
-      temp[line[args[:column1]].to_i] = line[args[:column2]].to_f if line[:location] == args[:name]
+    data_set.each do |line|
+      temp[line[:timeframe].to_i] = line[:data].to_f if line[:location] == name
     end
     temp
-  end
-
-  def give_district_data(district)
-    district.enrollment = find_by_name(district.name)
   end
 
 end
