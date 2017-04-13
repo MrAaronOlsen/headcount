@@ -8,11 +8,8 @@ class LoadTest < MiniTest::Test
 
   def test_it_ids_headers
     loaded = Load.new('data/Median household income.csv')
-    parsed = loaded.parsable_file
-
-    assert_equal  "Colorado" , parsed.first[:location]
+    parsed = loaded.load_data(:location)
+    
+    assert_equal  "Colorado" , parsed[0].first[:location]
   end
 end
-
-
-#Location,Category,TimeFrame,DataFormat,Data

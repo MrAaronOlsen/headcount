@@ -5,16 +5,15 @@ class Load
     @file = file
   end
 
-  def make_hash(*args)
-    data = []
-    districts = []
+  def load_data(*args)
+    data = [[], []]
 
     CSV.foreach(@file, headers: true, header_converters: :symbol ) do |row|
-      data << args.map { |arg| [arg, row[arg]] }.to_h
-      districts << row[:location]
+      data[0] << args.map { |arg| [arg, row[arg]] }.to_h
+      data[1] << row[:location]
     end
-    
-    data << districts
+
+    data
   end
 
 end

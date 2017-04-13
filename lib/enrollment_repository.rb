@@ -9,26 +9,28 @@ class EnrollmentRepository
   def load_data(args)
     districts = []
     args[:enrollment].each do |data_set, address|
-      loader = Load.new(address).make_hash(:location, :timeframe,
+      loader = Load.new(address).load_data(:location, :timeframe,
                                            :dataformat, :data)
-      districts |= loader.delete_at(-1)
-      @enrollments[data_set] = loader
+      districts |= loader[1]#.delete_at(-1)
+      @enrollments[data_set] = loader[0]
     end
     districts
   end
 
   def find_by_name(name)
-     # return nill if no name match or check against district list
     Enrollment.new({:name => name,
-                      :kindergarten_participation => collect_kindergarten_data(name)
-                      # :highschool =>  finds_highschool(name)
+                      :kindergarten_participation =>
+                        collect_data( :name => name,
+                                                   :data_set => :kindergarten,
+                                                   :column1 => :timeframe,
+                                                   :column2 => :data )
                     })
   end
 
-  def collect_kindergarten_data(name)
+  def collect_data(args)
     temp = {}
-    @enrollments[:kindergarten].each do |line|
-      temp[line[:timeframe].to_i] = line[:data].to_f if line[:location] == name
+    @enrollments[args[:data_set]].each do |line|
+      temp[line[args[:column1]].to_i] = line[args[:column2]].to_f if line[:location] == args[:name]
     end
     temp
   end
