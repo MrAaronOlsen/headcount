@@ -14,6 +14,14 @@ class Enrollment
     @args[:kindergarten_participation][year]
   end
 
+  def graduation_rate_by_year
+    @args[:high_school_graduation]
+  end
+
+  def graduation_rate_in_year(year)
+    @args[:high_school_graduation][year]
+  end
+
   def name
     @args[:name]
   end

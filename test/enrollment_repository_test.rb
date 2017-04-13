@@ -17,12 +17,22 @@ class EnrollmentRepositoryTest < MiniTest::Test
   end
 
   def test_it_cant_find_by_name
-    skip
     er = EnrollmentRepository.new
     er.load_data({:enrollment => {
                     :kindergarten => "./data/Kindergartners in full-day program.csv"}})
 
     assert_nil er.find_by_name("FRIKINFRACK")
+  end
+
+  def test_that_it_gives_district_data
+    er = EnrollmentRepository.new
+    er.load_data({:enrollment => {
+                    :kindergarten => "./data/Kindergartners in full-day program.csv"}})
+    district = District.new( {:name => "ACADEMY 20"} )
+    er.give_district_data(district)
+
+    assert_instance_of Enrollment, district.enrollment
+    assert_in_delta 0.267, district.enrollment.kindergarten_participation_in_year(2005), 0.005
   end
 
   def test_it_returns_correct_kindergarted_participation_by_year_data_by_name
@@ -47,17 +57,15 @@ class EnrollmentRepositoryTest < MiniTest::Test
     assert_in_delta 0.267, enrollment.kindergarten_participation_in_year(2005), 0.005
   end
 
-  def test_that_it_gives_district_data
+  def test_it_returns_correct_highschool_graduation_in_year_data_by_name
+    skip
     er = EnrollmentRepository.new
     er.load_data({:enrollment => {
-                    :kindergarten => "./data/Kindergartners in full-day program.csv"}})
-    district = District.new( {:name => "ACADEMY 20"} )
-    er.give_district_data(district)
+                    :kindergarten => "./data/Kindergartners in full-day program.csv",
+                    :high_school_graduation => "./data/High school graduation rates.csv" }})
+    enrollment = er.find_by_name("ACADEMY 20")
 
-    assert_instance_of Enrollment, district.enrollment
-    assert_in_delta 0.267, district.enrollment.kindergarten_participation_in_year(2005), 0.005
+    assert_in_delta 0.895, enrollment.graduation_rate_in_year(2010), 0.005
   end
-
-
 
 end
