@@ -7,10 +7,14 @@ class EnrollmentRepository
   end
 
   def load_data(args)
-    enrollments = args[:enrollment]
-    enrollments.each do |data_set, address|
-      @enrollments[data_set] = Load.new(address).make_hash
+    districts = []
+    args[:enrollment].each do |data_set, address|
+      loader = Load.new(address).make_hash(:location, :timeframe,
+                                           :dataformat, :data)
+      districts |= loader.delete_at(-1)
+      @enrollments[data_set] = loader
     end
+    districts
   end
 
   def find_by_name(name)
