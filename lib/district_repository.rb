@@ -8,14 +8,18 @@ class DistrictRepository
   end
 
   def load_data(args)
-    build_districts(@repositories.reduce([]) do |districts, repo|
-      districts |= repo.load_data(args)
-    end )
+    build_districts(list_of_unique_district_names(args))
     give_districts_data
   end
 
-  def build_districts(districts)
-    districts.each { |name| @districts[name.upcase] ||= District.new({:name => name.upcase}) }
+  def list_of_unique_district_names(args)
+    @repositories.reduce([]) do |districts, repository|
+      districts |= repository.load_data(args)
+    end
+  end
+
+  def build_districts(district_names)
+    district_names.each { |name| @districts[name.upcase] ||= District.new({:name => name.upcase}) }
   end
 
   def give_districts_data
@@ -29,8 +33,9 @@ class DistrictRepository
   end
 
   def find_all_matching(fragment)
-    @districts.select do |name, district|
+    matching = @districts.select do |name, district|
       name.include?(fragment.upcase)
-    end.values
+    end
+    matching.values
   end
 end

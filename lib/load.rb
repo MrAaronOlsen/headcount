@@ -10,7 +10,7 @@ class Load
 
     CSV.foreach(@file, headers: true, header_converters: :symbol ) do |row|
       data[0] << args.map { |arg| [arg, row[arg]] }.to_h
-      data[1] << row[:location]
+      data[1] << row[:location].upcase
     end
 
     data

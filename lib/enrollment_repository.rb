@@ -11,7 +11,7 @@ class EnrollmentRepository
     args[:enrollment].each do |data_set, address|
       loader = Load.new(address).load_data(:location, :timeframe,
                                            :dataformat, :data)
-      districts |= loader[1]#.delete_at(-1)
+      districts |= loader[1]
       @enrollments[data_set] = loader[0]
     end
     districts
@@ -21,9 +21,9 @@ class EnrollmentRepository
     Enrollment.new({:name => name,
                       :kindergarten_participation =>
                         collect_data( :name => name,
-                                                   :data_set => :kindergarten,
-                                                   :column1 => :timeframe,
-                                                   :column2 => :data )
+                                      :data_set => :kindergarten,
+                                      :column1 => :timeframe,
+                                      :column2 => :data )
                     })
   end
 
