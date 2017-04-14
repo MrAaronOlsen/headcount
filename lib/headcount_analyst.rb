@@ -14,7 +14,21 @@ class HeadcountAnalyst
     average(compare[:location_2].enrollment.kindergarten_participation_by_year.values)
   end
 
-  def kindergarten_participation_against_high_school_graduation
+  def kindergarten_participation_rate_variation_trend(location, compare)
+    compare[:location_1] = @district_repository.find_by_name(location)
+    compare[:location_2] = @district_repository.find_by_name(compare[:against])
+
+    trend = []
+    trend << compare[:location_1].enrollment.kindergarten_participation_by_year.to_
+    trend << compare[:location_2].enrollment.kindergarten_participation_by_year.to_a
+      ## look at the data that this is producing to work with ^^^^^
+    binding.pry
+    trends = trend.group_by { |year| year[0] }
+
+  end
+
+
+  def kindergarten_participation_against_high_school_graduation(district)
 
   end
 

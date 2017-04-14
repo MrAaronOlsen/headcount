@@ -32,7 +32,7 @@ class EnrollmentRepository
 
     names.each do |name|
       enrollment = {}
-      enrollment[:name] = name
+      enrollment[:name] = name.upcase
 
       @data_sets.each do |data_name, data_set|
         enrollment[data_name] = collect_data(name, data_set)
