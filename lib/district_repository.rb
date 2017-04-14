@@ -14,6 +14,16 @@ class DistrictRepository
     give_districts_data
   end
 
+  def find_by_name(name)
+    @districts.find { |district| district.name == name }
+  end
+
+  def find_all_matching(fragment)
+    @districts.select do |district|
+      district.name.include?(fragment.upcase)
+    end
+  end
+
   def collect_names
     @repositories.reduce([]) do |all_names, repository|
       all_names |= repository.collect_names
@@ -33,14 +43,5 @@ class DistrictRepository
       end
     end
   end
-
-  def find_by_name(name)
-    @districts.find { |district| district.name == name }
-  end
-
-  def find_all_matching(fragment)
-    @districts.select do |district|
-      district.name.include?(fragment.upcase)
-    end
-  end
+  
 end
