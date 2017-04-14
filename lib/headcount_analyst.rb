@@ -14,8 +14,14 @@ class HeadcountAnalyst
     average(compare[:location_2].enrollment.kindergarten_participation_by_year.values)
   end
 
+  def kindergarten_participation_against_high_school_graduation
+
+  end
+
+
   def average(data)
     data.reduce(0) { |sum, data| sum + data } / data.length
   end
+
 
 end
