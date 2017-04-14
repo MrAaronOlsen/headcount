@@ -16,7 +16,6 @@ class DistrictRepositoryTest < MiniTest::Test
   end
 
   def test_it_cant_find_by_name
-    skip
     dr = DistrictRepository.new
     dr.load_data({:enrollment => {
                     :kindergarten => "./data/Kindergartners in full-day program.csv"}})
@@ -25,7 +24,6 @@ class DistrictRepositoryTest < MiniTest::Test
   end
 
   def test_it_can_find_all_matching
-    skip
     dr = DistrictRepository.new
     dr.load_data({:enrollment => {
                     :kindergarten => "./data/Kindergartners in full-day program.csv"}})
@@ -34,16 +32,14 @@ class DistrictRepositoryTest < MiniTest::Test
   end
 
   def test_it_cant_find_all_matching
-    skip
     dr = DistrictRepository.new
     dr.load_data({:enrollment => {
                     :kindergarten => "./data/Kindergartners in full-day program.csv"}})
 
     assert_equal [], dr.find_all_matching("BZYBUG")
   end
-  
+
   def test_that_it_gives_districts_enrollment_object
-    skip
     dr = DistrictRepository.new
     dr.load_data({:enrollment => {
                     :kindergarten => "./data/Kindergartners in full-day program.csv"}})

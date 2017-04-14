@@ -9,15 +9,14 @@ class DistrictRepository
 
   def load_data(args)
     @repositories.each { |repository| repository.load_data(args) }
-    build_district_list
-    build_districts(@districts)
 
+    build_districts(collect_names)
     give_districts_data
   end
 
-  def list_of_unique_district_names(args)
-    @repositories.reduce([]) do |districts, repository|
-      districts |= repository.load_data(args)
+  def collect_names
+    @repositories.reduce([]) do |all_names, repository|
+      all_names |= repository.collect_names
     end
   end
 
@@ -28,13 +27,15 @@ class DistrictRepository
   end
 
   def give_districts_data
-    @districts.each do |name, district|
-      @repositories.each { |repo| repo.give_district_data(district) }
+    @districts.each do |district|
+      @repositories.each do |repo|
+        district.repositories << repo.find_by_name(district.name)
+      end
     end
   end
 
   def find_by_name(name)
-    @districts.find { |district| district == name }
+    @districts.find { |district| district.name == name }
   end
 
   def find_all_matching(fragment)
