@@ -28,12 +28,21 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_it_can_compare_averages
-    skip
     dr = DistrictRepository.new
     dr.load_data({:enrollment => {
                     :kindergarten => "./data/Kindergartners in full-day program.csv"}})
     ha = HeadcountAnalyst.new(dr)
 
-    #assert_equal => percentage, ha.kidergarten_participation_rate_variation
+    assert_in_delta 0.766, ha.kindergarten_participation_rate_variation('ACADEMY 20', :against => 'COLORADO'), 0.005
+    assert_in_delta 0.447, ha.kindergarten_participation_rate_variation('ACADEMY 20', :against => 'YUMA SCHOOL DISTRICT 1'), 0.005
+  end
+
+  def test_a_thing
+    dr = DistrictRepository.new
+    dr.load_data({:enrollment => {
+                    :kindergarten => "./data/Kindergartners in full-day program.csv"}})
+    ha = HeadcountAnalyst.new(dr)
+
+    ha.kindergarten_participation_rate_variation_trend('ACADEMY 20', :against => 'COLORADO')
   end
 end
