@@ -12,8 +12,14 @@ class HeadcountAnalystTest < MiniTest::Test
                     :kindergarten => "./data/Kindergartners in full-day program.csv"}})
     ha = HeadcountAnalyst.new(dr)
 
-    assert_instance_of DistrictRepository, ha.repo
-    assert_equal "ACADEMY 20" , ha.repo.find_by_name("ACADEMY 20").name
+    assert_equal "ACADEMY 20" , ha.find_by_name("ACADEMY 20").name
+  end
+
+  def test_that_it_can_find_percent_in_a_range
+    ha = HeadcountAnalyst.new('DoopyDo')
+    range = [false, false, true, true, false, true, true, false]
+
+    assert_equal 50.0, ha.percent_of_range(range, true)
   end
 
   def test_that_it_can_predict_significance
