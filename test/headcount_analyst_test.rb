@@ -16,10 +16,27 @@ class HeadcountAnalystTest < MiniTest::Test
     assert_equal "ACADEMY 20" , ha.repo.find_by_name("ACADEMY 20").name
   end
 
+  def test_that_it_can_predict_significance
+    ha = HeadcountAnalyst.new('DoopyDo')
+
+    assert ha.predict?(70.1)
+    refute ha.predict?(60.9)
+  end
+
+  def test_that_it_can_find_correlation
+    ha = HeadcountAnalyst.new('DoopyDo')
+
+    assert ha.correlation?(0.6)
+    assert ha.correlation?(1.5)
+    refute ha.correlation?(0.59)
+    refute ha.correlation?(1.51)
+  end
+
   def test_that_it_can_find_percentiles
     ha = HeadcountAnalyst.new('DoopyDo')
 
     assert_in_delta 41.66, ha.percent(5.0, 12.0), 0.05
+    assert_in_delta 10.00, ha.percent(10.0, 0), 0.05
   end
 
   def test_that_it_can_average_data
@@ -126,8 +143,18 @@ class HeadcountAnalystTest < MiniTest::Test
                   :kindergarten => "./data/Kindergartners in full-day program.csv",
                   :high_school_graduation => "./data/High school graduation rates.csv" }})
   ha = HeadcountAnalyst.new(dr)
+  refute ha.kindergarten_participation_correlates_with_high_school_graduation(for: 'STATEWIDE')
+  end
 
-  assert ha.kindergarten_participation_correlates_with_high_school_graduation(for: 'STATEWIDE')
+  def test_that_it_correlates_kindergarten_and_highschool_range
+  dr = DistrictRepository.new
+  dr.load_data({:enrollment => {
+                  :kindergarten => "./data/Kindergartners in full-day program.csv",
+                  :high_school_graduation => "./data/High school graduation rates.csv" }})
+  ha = HeadcountAnalyst.new(dr)
+  districts = ["ACADEMY 20", 'PARK (ESTES PARK) R-3', 'YUMA SCHOOL DISTRICT 1']
+
+  assert ha.kindergarten_participation_correlates_with_high_school_graduation(:across => districts)
   end
 
 end

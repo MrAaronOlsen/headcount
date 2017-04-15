@@ -51,22 +51,33 @@ class HeadcountAnalyst
     :kindergarten_participation_against_high_school_graduation
 
   def kindergarten_participation_correlates_with_high_school_graduation(loc)
-    if loc[:for] == 'STATEWIDE'
-      kp_cor_hsg_range_percent
+    loc[:across], loc[:for] = @repo.all_names, nil if loc[:for] == 'STATEWIDE'
+
+    if loc[:across].nil?
+      correlation?(kp_v_hsg(loc[:for]))
     else
-      kp_v_hsg(loc[:for]) >= 0.6 && kp_v_hsg(loc[:for]) <= 1.5
+      predict?(kp_cor_hsg_range_percent(loc[:across]))
     end
   end
 
   alias :kp_cor_hsg
     :kindergarten_participation_correlates_with_high_school_graduation
 
-  def kp_cor_hsg_range_percent(range = @repo.all_names)
-    correlations = range.map { |loc| kp_cor_hsg(:for => loc.name) }
-    percent( correlations.count(true), correlations.count(false) )
+  def kp_cor_hsg_range_percent(range)
+    correlations = range.map { |loc| kp_cor_hsg(:for => loc) }
+    percent( correlations.count(true), correlations.count )
+  end
+
+  def predict?(percentage)
+    percentage > 70.0
+  end
+
+  def correlation?(percentage)
+    percentage >= 0.6 && percentage <= 1.5
   end
 
   def percent(num1, num2)
+    return num1 if num2.zero?
     (num1 / num2) * 100
   end
 
