@@ -2,6 +2,8 @@ require_relative 'headcount_helper'
 
 class DistrictRepository
 
+  attr_reader :districts
+
   def initialize
     @districts = []
     @repositories = [EnrollmentRepository.new] #,statwide.new, #econ.new
@@ -24,6 +26,10 @@ class DistrictRepository
     end
   end
 
+  def all_names
+    @districts.map { |district| district.name }
+  end
+
   def collect_names
     @repositories.reduce([]) do |all_names, repository|
       all_names |= repository.collect_names
@@ -43,5 +49,5 @@ class DistrictRepository
       end
     end
   end
-  
+
 end

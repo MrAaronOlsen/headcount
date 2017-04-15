@@ -34,5 +34,4 @@ class Enrollment
     @args[:name]
   end
 
-
 end
