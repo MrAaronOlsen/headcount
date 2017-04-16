@@ -32,7 +32,7 @@ class EnrollmentRepositoryTest < MiniTest::Test
     assert_nil er.find_by_name("FRIKINFRACK")
   end
 
-  def test_it_returns_correct_kindergarted_participation_by_year_data_by_name
+  def test_it_returns_correct_kindergarten_participation_by_year_data_by_name
     answer = { 2007 => 0.391, 2006 => 0.353, 2005 => 0.267, 2004 => 0.302,
                2008 => 0.384, 2009 => 0.39, 2010 => 0.436, 2011 => 0.489,
                2012 => 0.478, 2013 => 0.487, 2014 => 0.490 }
@@ -46,7 +46,7 @@ class EnrollmentRepositoryTest < MiniTest::Test
     end
   end
 
-  def test_it_returns_correct_kindergarted_participation_in_year_data_by_name
+  def test_it_returns_correct_kindergarten_participation_in_year_data_by_name
     er = EnrollmentRepository.new
     er.load_data({:enrollment => {
                     :kindergarten => "./data/Kindergartners in full-day program.csv"}})
