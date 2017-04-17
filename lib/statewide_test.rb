@@ -17,6 +17,7 @@ class StatewideTest
        @args[:third_grade]
      elsif grade == 8
        @args[:eighth_grade]
+
      else
        raise UnknownDataError
      end
