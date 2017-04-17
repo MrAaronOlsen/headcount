@@ -14,27 +14,27 @@
       <img src="./assets/0.10.0/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2017-04-16T05:24:32-06:00">2017-04-16T05:24:32-06:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2017-04-17T10:40:15-06:00">2017-04-17T10:40:15-06:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
         <div class="file_list_container" id="AllFiles">
   <h2>
     <span class="group_name">All Files</span>
-    (<span class="covered_percent"><span class="red">45.54%</span></span>
+    (<span class="covered_percent"><span class="red">50.72%</span></span>
      covered at
      <span class="covered_strength">
-       <span class="red">
-         0.46
+       <span class="green">
+         655.38
        </span>
     </span> hits/line)
   </h2>
   <a name="AllFiles"></a>
   <div>
     <b>13</b> files in total.
-    <b>202</b> relevant lines. 
-    <span class="green"><b>92</b> lines covered</span> and
-    <span class="red"><b>110</b> lines missed </span>
+    <b>209</b> relevant lines. 
+    <span class="green"><b>106</b> lines covered</span> and
+    <span class="red"><b>103</b> lines missed </span>
   </div>
   <table class="file_list">
     <thead>
@@ -132,32 +132,32 @@
       
       <tr>
         <td class="strong"><a href="#5d720af101563bdb624554d91a17d32d05c02857" class="src_link" title="lib/load.rb">lib/load.rb</a></td>
-        <td class="red strong">44.44 %</td>
+        <td class="green strong">100.0 %</td>
         <td>18</td>
         <td>9</td>
-        <td>4</td>
-        <td>5</td>
-        <td>0.4</td>
+        <td>9</td>
+        <td>0</td>
+        <td>11827.6</td>
       </tr>
       
       <tr>
         <td class="strong"><a href="#e9ddfbcfd98998147978d536d092f0f719669a02" class="src_link" title="lib/statewide_test.rb">lib/statewide_test.rb</a></td>
-        <td class="red strong">66.67 %</td>
-        <td>34</td>
+        <td class="red strong">61.11 %</td>
+        <td>33</td>
         <td>18</td>
-        <td>12</td>
-        <td>6</td>
-        <td>0.7</td>
+        <td>11</td>
+        <td>7</td>
+        <td>0.6</td>
       </tr>
       
       <tr>
         <td class="strong"><a href="#961d048247f449b17d88346c8bc99f82caeccaf5" class="src_link" title="lib/statewide_test_repository.rb">lib/statewide_test_repository.rb</a></td>
-        <td class="red strong">28.57 %</td>
-        <td>50</td>
-        <td>28</td>
-        <td>8</td>
-        <td>20</td>
-        <td>0.3</td>
+        <td class="red strong">51.43 %</td>
+        <td>62</td>
+        <td>35</td>
+        <td>18</td>
+        <td>17</td>
+        <td>869.9</td>
       </tr>
       
       <tr>
@@ -2023,11 +2023,11 @@
         <div class="source_table" id="5d720af101563bdb624554d91a17d32d05c02857">
   <div class="header">
     <h3>lib/load.rb</h3>
-    <h4><span class="red">44.44 %</span> covered</h4>
+    <h4><span class="green">100.0 %</span> covered</h4>
     <div>
       <b>9</b> relevant lines. 
-      <span class="green"><b>4</b> lines covered</span> and
-      <span class="red"><b>5</b> lines missed.</span>
+      <span class="green"><b>9</b> lines covered</span> and
+      <span class="red"><b>0</b> lines missed.</span>
     </div>
   </div>
   
@@ -2058,8 +2058,8 @@
           <code class="ruby">  def initialize(file)</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="5">
-          
+        <li class="covered" data-hits="4" data-linenumber="5">
+          <span class="hits">4</span>
           
           <code class="ruby">    @file = file</code>
         </li>
@@ -2082,8 +2082,8 @@
           <code class="ruby">  def load_data(*args)</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="9">
-          
+        <li class="covered" data-hits="4" data-linenumber="9">
+          <span class="hits">4</span>
           
           <code class="ruby">    data = []</code>
         </li>
@@ -2094,14 +2094,14 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="11">
-          
+        <li class="covered" data-hits="4" data-linenumber="11">
+          <span class="hits">4</span>
           
           <code class="ruby">    CSV.foreach(@file, headers: true, header_converters: :symbol ) do |row|</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="12">
-          
+        <li class="covered" data-hits="106428" data-linenumber="12">
+          <span class="hits">106428</span>
           
           <code class="ruby">      data &lt;&lt; args.map { |arg| [arg, row[arg]] }.to_h</code>
         </li>
@@ -2118,8 +2118,8 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="15">
-          
+        <li class="covered" data-hits="4" data-linenumber="15">
+          <span class="hits">4</span>
           
           <code class="ruby">    data</code>
         </li>
@@ -2149,11 +2149,11 @@
         <div class="source_table" id="e9ddfbcfd98998147978d536d092f0f719669a02">
   <div class="header">
     <h3>lib/statewide_test.rb</h3>
-    <h4><span class="red">66.67 %</span> covered</h4>
+    <h4><span class="red">61.11 %</span> covered</h4>
     <div>
       <b>18</b> relevant lines. 
-      <span class="green"><b>12</b> lines covered</span> and
-      <span class="red"><b>6</b> lines missed.</span>
+      <span class="green"><b>11</b> lines covered</span> and
+      <span class="red"><b>7</b> lines missed.</span>
     </div>
   </div>
   
@@ -2193,172 +2193,166 @@
         <li class="covered" data-hits="1" data-linenumber="6">
           <span class="hits">1</span>
           
-          <code class="ruby">  def initialize(args)</code>
+          <code class="ruby">  attr_reader :args</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="7">
           <span class="hits">1</span>
           
-          <code class="ruby">    @args = args</code>
+          <code class="ruby">  def initialize(args)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="8">
-          <span class="hits">1</span>
+        <li class="missed" data-hits="0" data-linenumber="8">
           
-          <code class="ruby">    binding.pry</code>
+          
+          <code class="ruby">    @args = args</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="9">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">  end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="10">
           
           
-          <code class="ruby">  end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="11">
-          
-          
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="12">
+        <li class="covered" data-hits="1" data-linenumber="11">
           <span class="hits">1</span>
           
           <code class="ruby">  def name</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="13">
+        <li class="missed" data-hits="0" data-linenumber="12">
           
           
           <code class="ruby">    @args[:name]</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="14">
+        <li class="never" data-hits="" data-linenumber="13">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="15">
+        <li class="never" data-hits="" data-linenumber="14">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="16">
+        <li class="covered" data-hits="1" data-linenumber="15">
           <span class="hits">1</span>
           
           <code class="ruby">  def proficient_by_grade(grade)</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="17">
+        <li class="missed" data-hits="0" data-linenumber="16">
           
           
           <code class="ruby">     if grade == 3</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="18">
+        <li class="missed" data-hits="0" data-linenumber="17">
           
           
           <code class="ruby">       @args[:third_grade]</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="19">
+        <li class="missed" data-hits="0" data-linenumber="18">
           
           
           <code class="ruby">     elsif grade == 8</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="20">
+        <li class="missed" data-hits="0" data-linenumber="19">
           
           
           <code class="ruby">       @args[:eighth_grade]</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="21">
+        <li class="never" data-hits="" data-linenumber="20">
           
           
           <code class="ruby">     else</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="22">
+        <li class="missed" data-hits="0" data-linenumber="21">
           
           
           <code class="ruby">       raise UnknownDataError</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="23">
+        <li class="never" data-hits="" data-linenumber="22">
           
           
           <code class="ruby">     end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="24">
+        <li class="never" data-hits="" data-linenumber="23">
           
           
           <code class="ruby">   end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="25">
+        <li class="never" data-hits="" data-linenumber="24">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="26">
+        <li class="covered" data-hits="1" data-linenumber="25">
           <span class="hits">1</span>
           
           <code class="ruby">    def proficient_by_race_or_ethnicity(race)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="27">
+        <li class="never" data-hits="" data-linenumber="26">
           
           
           <code class="ruby">    end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="28">
+        <li class="never" data-hits="" data-linenumber="27">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="29">
+        <li class="covered" data-hits="1" data-linenumber="28">
           <span class="hits">1</span>
           
           <code class="ruby">    def proficient_for_subject_by_grade_in_year(subject, grade, year)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="30">
+        <li class="never" data-hits="" data-linenumber="29">
           
           
           <code class="ruby">    end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="31">
+        <li class="never" data-hits="" data-linenumber="30">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="32">
+        <li class="covered" data-hits="1" data-linenumber="31">
           <span class="hits">1</span>
           
           <code class="ruby">    def proficient_for_subject_by_race_in_year(subject, race, year)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="33">
+        <li class="never" data-hits="" data-linenumber="32">
           
           
           <code class="ruby">    end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="34">
+        <li class="never" data-hits="" data-linenumber="33">
           
           
           <code class="ruby">end</code>
@@ -2371,11 +2365,11 @@
         <div class="source_table" id="961d048247f449b17d88346c8bc99f82caeccaf5">
   <div class="header">
     <h3>lib/statewide_test_repository.rb</h3>
-    <h4><span class="red">28.57 %</span> covered</h4>
+    <h4><span class="red">51.43 %</span> covered</h4>
     <div>
-      <b>28</b> relevant lines. 
-      <span class="green"><b>8</b> lines covered</span> and
-      <span class="red"><b>20</b> lines missed.</span>
+      <b>35</b> relevant lines. 
+      <span class="green"><b>18</b> lines covered</span> and
+      <span class="red"><b>17</b> lines missed.</span>
     </div>
   </div>
   
@@ -2406,14 +2400,14 @@
           <code class="ruby">  def initialize</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="5">
-          
+        <li class="covered" data-hits="5" data-linenumber="5">
+          <span class="hits">5</span>
           
           <code class="ruby">    @data_sets = {}</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="6">
-          
+        <li class="covered" data-hits="5" data-linenumber="6">
+          <span class="hits">5</span>
           
           <code class="ruby">    @statewide_tests = []</code>
         </li>
@@ -2436,247 +2430,319 @@
           <code class="ruby">  def load_data(args)</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="10">
+        <li class="never" data-hits="" data-linenumber="10">
           
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="4" data-linenumber="11">
+          <span class="hits">4</span>
           
           <code class="ruby">    args[:statewide_testing].each do |data_set, address|</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="11">
+        <li class="covered" data-hits="4" data-linenumber="12">
+          <span class="hits">4</span>
           
-          
-          <code class="ruby">      loader = Load.new(address).load_data( :location, :score, :race_ethnicity, :timeframe,</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="12">
-          
-          
-          <code class="ruby">                                            :dataformat, :data )</code>
+          <code class="ruby">      @loader = Load.new(address).load_data( :location, :score, :race_ethnicity, :timeframe,</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="13">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">                                            :dataformat, :data )</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="14">
+        <li class="covered" data-hits="4" data-linenumber="14">
+          <span class="hits">4</span>
           
+          <code class="ruby">      loader_cleaner</code>
+        </li>
+      
+        <li class="covered" data-hits="4" data-linenumber="15">
+          <span class="hits">4</span>
           
           <code class="ruby">      @data_sets[data_set] = loader</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="15">
+        <li class="never" data-hits="" data-linenumber="16">
           
           
           <code class="ruby">    end</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="16">
+        <li class="missed" data-hits="0" data-linenumber="17">
+          
+          
+          <code class="ruby">    binding.pry</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="18">
           
           
           <code class="ruby">    build_statewide_tests</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="17">
+        <li class="never" data-hits="" data-linenumber="19">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="18">
+        <li class="never" data-hits="" data-linenumber="20">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="19">
+        <li class="covered" data-hits="1" data-linenumber="21">
           <span class="hits">1</span>
           
-          <code class="ruby">  def find_by_name(name)</code>
+          <code class="ruby">  def loader_cleaner</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="20">
+        <li class="covered" data-hits="4" data-linenumber="22">
+          <span class="hits">4</span>
           
-          
-          <code class="ruby">    @statewide_tests.find { |statewide_test| statewide_test.name == name }</code>
+          <code class="ruby">    @loader.map do |test|</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="21">
+        <li class="covered" data-hits="15204" data-linenumber="23">
+          <span class="hits">15204</span>
           
-          
-          <code class="ruby">  end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="22">
-          
-          
-          <code class="ruby"></code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="23">
-          <span class="hits">1</span>
-          
-          <code class="ruby">  def collect_names</code>
+          <code class="ruby">      if test[:score].nil?</code>
         </li>
       
         <li class="missed" data-hits="0" data-linenumber="24">
           
           
-          <code class="ruby">    @data_sets.reduce([]) do |all_names, data_set|</code>
+          <code class="ruby">        test.delete(:score)</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="25">
+        <li class="never" data-hits="" data-linenumber="25">
           
           
-          <code class="ruby">      all_names |= data_set[1].map { |line| line[:location] }</code>
+          <code class="ruby">      else</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="26">
+        <li class="covered" data-hits="15204" data-linenumber="26">
+          <span class="hits">15204</span>
           
-          
-          <code class="ruby">    end</code>
+          <code class="ruby">        test.delete(:race_ethnicity)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="27">
           
           
-          <code class="ruby">  end</code>
+          <code class="ruby">      end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="28">
           
           
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="29">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="30">
+          
+          
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="29">
+        <li class="covered" data-hits="1" data-linenumber="31">
           <span class="hits">1</span>
           
-          <code class="ruby">  def build_statewide_tests</code>
-        </li>
-      
-        <li class="missed" data-hits="0" data-linenumber="30">
-          
-          
-          <code class="ruby">    names = collect_names</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="31">
-          
-          
-          <code class="ruby"></code>
+          <code class="ruby">  def find_by_name(name)</code>
         </li>
       
         <li class="missed" data-hits="0" data-linenumber="32">
           
           
-          <code class="ruby">    names.each do |name|</code>
+          <code class="ruby">    @statewide_tests.find { |statewide_test| statewide_test.name == name }</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="33">
+        <li class="never" data-hits="" data-linenumber="33">
           
           
-          <code class="ruby">      statewide_test = {}</code>
+          <code class="ruby">  end</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="34">
-          
-          
-          <code class="ruby">      statewide_test[:name] = name.upcase</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="35">
+        <li class="never" data-hits="" data-linenumber="34">
           
           
           <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="35">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def collect_names</code>
         </li>
       
         <li class="missed" data-hits="0" data-linenumber="36">
           
           
-          <code class="ruby">      @data_sets.each do |data_name, data_set|</code>
+          <code class="ruby">    @data_sets.reduce([]) do |all_names, data_set|</code>
         </li>
       
         <li class="missed" data-hits="0" data-linenumber="37">
           
           
-          <code class="ruby">        statewide_test[data_name] = collect_data(name, data_set)</code>
+          <code class="ruby">      all_names |= data_set[1].map { |line| line[:location] }</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="38">
           
           
-          <code class="ruby">      end</code>
+          <code class="ruby">    end</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="39">
+        <li class="never" data-hits="" data-linenumber="39">
           
           
-          <code class="ruby">      @statewide_tests &lt;&lt; StatewideTest.new(statewide_test)</code>
+          <code class="ruby">  end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="40">
           
           
-          <code class="ruby">    end</code>
+          <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="41">
+        <li class="covered" data-hits="1" data-linenumber="41">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">  end</code>
+          <code class="ruby">  def build_statewide_tests</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="42">
+        <li class="missed" data-hits="0" data-linenumber="42">
+          
+          
+          <code class="ruby">    names = collect_names</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="43">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="43">
-          <span class="hits">1</span>
-          
-          <code class="ruby">  def collect_data(name, data_set)</code>
-        </li>
-      
         <li class="missed" data-hits="0" data-linenumber="44">
           
           
-          <code class="ruby">    temp = {}</code>
+          <code class="ruby">    names.each do |name|</code>
         </li>
       
         <li class="missed" data-hits="0" data-linenumber="45">
           
           
-          <code class="ruby">    data_set.each do |line|</code>
+          <code class="ruby">      statewide_test = {}</code>
         </li>
       
         <li class="missed" data-hits="0" data-linenumber="46">
           
           
-          <code class="ruby">      temp[line[:timeframe].to_i] = line[:data].to_f if line[:location] == name</code>
+          <code class="ruby">      statewide_test[:name] = name.upcase</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="47">
           
           
-          <code class="ruby">    end</code>
+          <code class="ruby"></code>
         </li>
       
         <li class="missed" data-hits="0" data-linenumber="48">
           
           
-          <code class="ruby">    temp</code>
+          <code class="ruby">      @data_sets.each do |data_name, data_set|</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="49">
+        <li class="missed" data-hits="0" data-linenumber="49">
+          
+          
+          <code class="ruby">        statewide_test[data_name] = collect_data(name, data_set)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="50">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="51">
+          
+          
+          <code class="ruby">      @statewide_tests &lt;&lt; StatewideTest.new(statewide_test)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="52">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="53">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="50">
+        <li class="never" data-hits="" data-linenumber="54">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="55">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def collect_data(name, data_set)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="56">
+          
+          
+          <code class="ruby">    temp = {}</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="57">
+          
+          
+          <code class="ruby">    data_set.each do |line|</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="58">
+          
+          
+          <code class="ruby">      temp[line[:timeframe].to_i] = line[:data].to_f if line[:location] == name</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="59">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="60">
+          
+          
+          <code class="ruby">    temp</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="61">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="62">
           
           
           <code class="ruby">end</code>

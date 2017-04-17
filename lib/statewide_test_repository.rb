@@ -7,13 +7,25 @@ class StatewideTestRepository
   end
 
   def load_data(args)
-    args[:statewide_testing].each do |data_set, address|
-      loader = Load.new(address).load_data( :location, :score, :race_ethnicity, :timeframe,
-                                            :dataformat, :data )
 
-      @data_sets[data_set] = loader
+    args[:statewide_testing].each do |data_set, address|
+      @loader = Load.new(address).load_data( :location, :score, :race_ethnicity, :timeframe,
+                                            :dataformat, :data )
+      loader_cleaner
+      @data_sets[data_set] = @loader
     end
+    binding.pry
     build_statewide_tests
+  end
+
+  def loader_cleaner
+    @loader.map do |test|
+      if test[:score].nil?
+        test.delete(:score)
+      else
+        test.delete(:race_ethnicity)
+      end
+    end
   end
 
   def find_by_name(name)

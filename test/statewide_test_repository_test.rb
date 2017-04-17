@@ -32,6 +32,20 @@ class StatewideTestRepositoryTest < MiniTest::Test
     assert_nil str.find_by_name("NEVERLAND")
   end
 
+  # def test_it_returns_correct_statewide_test_scores_in_year_data_by_name
+  #   answer = { 2007 => 0.391, 2006 => 0.353, 2005 => 0.267, 2004 => 0.302,
+  #              2008 => 0.384, 2009 => 0.39, 2010 => 0.436, 2011 => 0.489,
+  #              2012 => 0.478, 2013 => 0.487, 2014 => 0.490 }
+  #   er = EnrollmentRepository.new
+  #   er.load_data({:enrollment => {
+  #                   :kindergarten => "./data/Kindergartners in full-day program.csv"}})
+  #   kp_by_year = er.find_by_name("ACADEMY 20").kindergarten_participation_by_year
+  #
+  #   kp_by_year.each do |year, data|
+  #     assert_in_delta answer[year], data, 0.005
+  #   end
+  # end
+
   def test_that_it_has_a_statewide_test_repository
     str = StatewideTestRepository.new
     str.load_data({
