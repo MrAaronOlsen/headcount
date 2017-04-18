@@ -8,6 +8,7 @@ class EconomicProfileRepository
   end
 
   def load_data(args)
+    return nil if args[:economic_profile].nil?
 
     args[:economic_profile].each do |data_set, address|
       loader = Load.new(address).load_data( :location, :poverty_level, :timeframe,
