@@ -7,7 +7,6 @@ class StatewideTestRepositoryTest < MiniTest::Test
   end
 
   def test_that_it_collects_unique_names
-    skip
   str = StatewideTestRepository.new
     str.load_data({:statewide_testing => {
                     :third_grade => "./data/3rd grade students scoring proficient or above on the CSAP_TCAP.csv"}})
@@ -16,7 +15,6 @@ class StatewideTestRepositoryTest < MiniTest::Test
   end
 
   def test_it_finds_by_name
-    skip
     str = StatewideTestRepository.new
       str.load_data({:statewide_testing => {
                       :third_grade => "./data/3rd grade students scoring proficient or above on the CSAP_TCAP.csv"}})
@@ -27,7 +25,6 @@ class StatewideTestRepositoryTest < MiniTest::Test
   end
 
   def test_it_cant_find_by_name
-    skip
     str = StatewideTestRepository.new
       str.load_data({:statewide_testing => {
                       :third_grade => "./data/3rd grade students scoring proficient or above on the CSAP_TCAP.csv"}})
@@ -36,7 +33,6 @@ class StatewideTestRepositoryTest < MiniTest::Test
   end
 
   def test_it_can_load_dynamic_csvs_1
-    skip
     str = StatewideTestRepository.new
     loaded = str.load_data({:statewide_testing => {
                       :third_grade => "./test/fixtures/3rd_grade_fixture.csv"}})
@@ -48,26 +44,18 @@ class StatewideTestRepositoryTest < MiniTest::Test
   end
 
   def test_it_can_load_dynamic_csvs_2
-    skip
     str = StatewideTestRepository.new
     loaded = str.load_data({:statewide_testing => {
                       :writing => "./test/fixtures/average_proficiency_writing_fixture.csv"}})
     expected = {:writing => [
     {location: "Colorado", race_ethnicity: "All Students",timeframe: "2011",dataformat: "Percent", data: "0.5531"},
     {location: "Colorado", race_ethnicity: "Asian",timeframe: "2011",dataformat: "Percent", data: "0.6569"},
-    {location: "Colorado", race_ethnicity: "Black",timeframe: "2011",dataformat: "Percent", data: "0.3701"},
-    {location: "Colorado", race_ethnicity: "Hawaiian/Pacific Islander",timeframe: "2011",dataformat: "Percent", data: "0.5583"},
-    {location: "Colorado", race_ethnicity: "Hispanic",timeframe: "2011",dataformat: "Percent", data: "0.368"},
-    {location: "Colorado", race_ethnicity: "Native American",timeframe: "2011",dataformat: "Percent", data: "0.3788"},
-    {location: "Colorado", race_ethnicity: "Two or more",timeframe: "2011",dataformat: "Percent", data: "0.6169"},
-    {location: "Colorado", race_ethnicity: "White",timeframe: "2011",dataformat: "Percent", data: "0.6633"}]}
-
+    {location: "Colorado", race_ethnicity: "Black",timeframe: "2011",dataformat: "Percent", data: "0.3701"}]}
 
     assert_equal expected, loaded
   end
 
   def test_it_can_give_districts_data
-    skip
     str = StatewideTestRepository.new
     loaded = str.load_data({:statewide_testing => {
                       :third_grade => "./test/fixtures/3rd_grade_fixture.csv",
@@ -80,17 +68,11 @@ class StatewideTestRepositoryTest < MiniTest::Test
     :writing =>
       [ {location: "Colorado", race_ethnicity: "All Students",timeframe: "2011",dataformat: "Percent", data: "0.5531"},
         {location: "Colorado", race_ethnicity: "Asian",timeframe: "2011",dataformat: "Percent", data: "0.6569"},
-        {location: "Colorado", race_ethnicity: "Black",timeframe: "2011",dataformat: "Percent", data: "0.3701"},
-        {location: "Colorado", race_ethnicity: "Hawaiian/Pacific Islander",timeframe: "2011",dataformat: "Percent", data: "0.5583"},
-        {location: "Colorado", race_ethnicity: "Hispanic",timeframe: "2011",dataformat: "Percent", data: "0.368"},
-        {location: "Colorado", race_ethnicity: "Native American",timeframe: "2011",dataformat: "Percent", data: "0.3788"},
-        {location: "Colorado", race_ethnicity: "Two or more",timeframe: "2011",dataformat: "Percent", data: "0.6169"},
-        {location: "Colorado", race_ethnicity: "White",timeframe: "2011",dataformat: "Percent", data: "0.6633"} ]
+        {location: "Colorado", race_ethnicity: "Black",timeframe: "2011",dataformat: "Percent", data: "0.3701"}]
     }
 
     assert_equal expected, str.find_by_name('COLORADO').data
   end
-
 
   def test_it_loads_all_files
     str = StatewideTestRepository.new
