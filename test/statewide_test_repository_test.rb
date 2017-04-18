@@ -86,48 +86,4 @@ class StatewideTestRepositoryTest < MiniTest::Test
       assert_equal "COLORADO", str.find_by_name("COLORADO").name
   end
 
-  # def test_it_collects_score_data
-  #   str = StatewideTestRepository.new
-  #   loaded = str.load_data({:statewide_testing => {
-  #                     :third_grade => "./test/fixtures/3rd_grade_fixture.csv"}})
-  #   data_set = [{location: "Colorado", score: "Math", timeframe: "2008", dataformat: "Percent", data: "0.697"},
-  #   {location: "Colorado", score: "Reading", timeframe: "2008", dataformat: "Percent", data: "0.703"},
-  #   {location: "Colorado", score: "Writing", timeframe: "2008", dataformat: "Percent", data: "0.501"}]
-  #
-  #   expected = { 2008 => { math: 0.697, reading: 0.703, writing: 0.501 }}
-  #
-  #   assert_equal expected, str.collect_data("Colorado", data_set)
-  # end
-
-
-  # def test_it_returns_correct_statewide_test_scores_in_year_data_by_name
-  #   answer = { 2007 => 0.391, 2006 => 0.353, 2005 => 0.267, 2004 => 0.302,
-  #              2008 => 0.384, 2009 => 0.39, 2010 => 0.436, 2011 => 0.489,
-  #              2012 => 0.478, 2013 => 0.487, 2014 => 0.490 }
-  #   er = EnrollmentRepository.new
-  #   er.load_data({:enrollment => {
-  #                   :kindergarten => "./data/Kindergartners in full-day program.csv"}})
-  #   kp_by_year = er.find_by_name("ACADEMY 20").kindergarten_participation_by_year
-  #
-  #   kp_by_year.each do |year, data|
-  #     assert_in_delta answer[year], data, 0.005
-  #   end
-  # end
-
-  # def test_that_it_has_a_statewide_test_repository
-  #   str = StatewideTestRepository.new
-  #   str.load_data({
-  #     :statewide_testing => {
-  #       :third_grade => "./data/3rd grade students scoring proficient or above on the CSAP_TCAP.csv",
-  #       :eighth_grade => "./data/8th grade students scoring proficient or above on the CSAP_TCAP.csv",
-  #       :math => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Math.csv",
-  #       :reading => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Reading.csv",
-  #       :writing => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Writing.csv"
-  #     }
-  #   })
-  #   str = str.find_by_name("ACADEMY 20")
-  #
-  #   assert_equal "ACADEMY 20" , str.find_by_name("ACADEMY 20").name
-  # end
-
 end
