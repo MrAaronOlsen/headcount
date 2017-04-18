@@ -27,7 +27,7 @@ class StatewideTestTest < MiniTest::Test
         {location: 'Colorado', race_ethnicity: 'Asian', timeframe: '2011', dataformat: 'Percent', data: '0.2111'},
         {location: 'Colorado', race_ethnicity: 'Black', timeframe: '2011', dataformat: 'Percent', data: '0.2222'},
         {location: 'Colorado', race_ethnicity: 'Asian', timeframe: '2012', dataformat: 'Percent', data: '0.2333'},
-        {location: 'Colorado', race_ethnicity: 'Black', timeframe: '2012', dataformat: 'Percent', data: '0.3444'}],
+        {location: 'Colorado', race_ethnicity: 'Black', timeframe: '2012', dataformat: 'Percent', data: '0.2444'}],
       writing:[
         {location: 'Colorado', race_ethnicity: 'Asian', timeframe: '2011', dataformat: 'Percent', data: '0.3111'},
         {location: 'Colorado', race_ethnicity: 'Black', timeframe: '2011', dataformat: 'Percent', data: '0.3222'},
@@ -95,7 +95,6 @@ class StatewideTestTest < MiniTest::Test
   end
 
   def test_that_it_can_grab_race_ethnicity_data
-    skip
     st = StatewideTest.new(@data_sets)
 
     expected = {
@@ -120,13 +119,12 @@ class StatewideTestTest < MiniTest::Test
   end
 
   def test_that_it_can_collect_race_ethnicity_data_by_subject
-    skip
     st = StatewideTest.new(@data_sets)
     race_data = st.grab_race_ethnicity_data
 
-    expected = {:math=>0.7094, :reading=>0.7482, :writing=>0.6569}
+    expected = {:math=>0.1111, :reading=>0.2111, :writing=>0.3111}
 
-    assert_equal st.collect_race_by_subject(race_data, :asian), expected
+    assert_equal st.collect_race_by_subject(race_data, :asian, '2011'), expected
   end
 
   def test_that_it_can_collect_race_by_date
@@ -140,7 +138,6 @@ class StatewideTestTest < MiniTest::Test
   end
 
   def test_that_it_can_find_proficiency_by_race_or_ethnicity
-    skip
     st = StatewideTest.new(@data_sets)
 
     expected = {2011=>{:math=>0.1111, :reading=>0.2111, :writing=>0.3111},
@@ -150,17 +147,15 @@ class StatewideTestTest < MiniTest::Test
   end
 
   def test_that_it_can_find_proficiency_for_subject_by_grade_in_year
-    skip
     st = StatewideTest.new(@data_sets)
 
     assert_in_delta 0.144, st.proficient_for_subject_by_grade_in_year(:math, 3, 2009), 0.005
   end
 
   def test_that_it_can_find_proficiency_for_subject_by_race_in_year
-    skip
     st = StatewideTest.new(@data_sets)
 
-    assert_in_delta 0.7094, st.proficient_for_subject_by_race_in_year(:math, :asian, 2011), 0.005
+    assert_in_delta 0.1111, st.proficient_for_subject_by_race_in_year(:math, :asian, 2011), 0.005
   end
 
 end
