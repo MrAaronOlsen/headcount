@@ -8,7 +8,8 @@ class StatewideTestRepository
   end
 
   def load_data(args)
-
+    return nil if args[:statewide_testing].nil?
+    
     args[:statewide_testing].each do |data_set, address|
       loader = Load.new(address).load_data( :location, :score, :race_ethnicity, :timeframe,
                                             :dataformat, :data )

@@ -47,4 +47,20 @@ class DistrictRepositoryTest < MiniTest::Test
     assert_in_delta 0.436, district.enrollment.kindergarten_participation_in_year(2010), 0.005
   end
 
+  def test_that_it_gives_districts_statewide_test_object
+    dr = DistrictRepository.new
+    dr.load_data({:enrollment => {
+                    :kindergarten => "./data/Kindergartners in full-day program.csv"},
+                  :statewide_testing => {
+                    :third_grade => "./data/3rd grade students scoring proficient or above on the CSAP_TCAP.csv",
+                    :eighth_grade => "./data/8th grade students scoring proficient or above on the CSAP_TCAP.csv",
+                    :math => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Math.csv",
+                    :reading => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Reading.csv",
+                    :writing => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Writing.csv"}
+                    })
+
+    district = dr.find_by_name("COLORADO")
+    assert_in_delta 0.7094, district.statewide_test.proficient_for_subject_by_race_in_year(:math, :asian, 2012), 0.005
+  end
+
 end

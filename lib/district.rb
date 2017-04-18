@@ -15,4 +15,8 @@ class District
     @repositories.find { |repo| repo.is_a? Enrollment }
   end
 
+  def statewide_test
+    @repositories.find { |repo| repo.is_a? StatewideTest }
+  end
+
 end
