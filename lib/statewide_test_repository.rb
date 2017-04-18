@@ -9,22 +9,17 @@ class StatewideTestRepository
   def load_data(args)
 
     args[:statewide_testing].each do |data_set, address|
-      @loader = Load.new(address).load_data( :location, :score, :race_ethnicity, :timeframe,
+      loader = Load.new(address).load_data( :location, :score, :race_ethnicity, :timeframe,
                                             :dataformat, :data )
-      loader_cleaner
-      @data_sets[data_set] = @loader
+
+      @data_sets[data_set] = loader_cleaner(loader)
     end
-    binding.pry
     build_statewide_tests
   end
 
-  def loader_cleaner
-    @loader.map do |test|
-      if test[:score].nil?
-        test.delete(:score)
-      else
-        test.delete(:race_ethnicity)
-      end
+  def loader_cleaner(loader)
+    loader.map do |test|
+      test.delete_if { |k, v| v.nil? }
     end
   end
 
@@ -38,6 +33,23 @@ class StatewideTestRepository
     end
   end
 
+  def collect_data(name, data_set)
+    temp = []
+    data_set.each do |line|
+        temp << line if line[:location] == name
+    end
+    temp
+  end
+  #
+  # def collect_scores(data_set, date, name)
+  #   score_hash = {}
+  #   data_set.each do |line|
+  #     # binding.pry
+  #     score_hash[line[:score].downcase.to_sym] = line[:data].to_f if line[:timeframe] == date && line[:location] == name
+  #   end
+  #   score_hash
+  # end
+
   def build_statewide_tests
     names = collect_names
 
@@ -50,13 +62,6 @@ class StatewideTestRepository
       end
       @statewide_tests << StatewideTest.new(statewide_test)
     end
-  end
-
-  def collect_data(name, data_set)
-    temp = {}
-    data_set.each do |line|
-      temp[line[:timeframe].to_i] = line[:data].to_f if line[:location] == name
-    end
-    temp
+    @data_sets
   end
 end

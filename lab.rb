@@ -1,23 +1,34 @@
 require_relative 'lib/headcount_helper'
-#
-# loaded = Load.new("./data/Kindergartners in full-day program.csv")
-#
-# data = loaded.load_data(:location, :timeframe, :dataformat, :data)
-#
-# puts data
-
-def match_data(first, second)
-    [ first.select { |key| second.include?(key) },
-    second.select { |key| first.include?(key) } ]
+def variable_key
+  if data_set.include?(:score)
+      :score
+  else
+      :race_ethnicity
+  end
 end
 
-hash1 = {2010 => 2.0, 2011 => 3.0, 2012 => 4.0, 2013 => 5.0}
-hash2 = {2010 => 1.0, 2011 => 1.5, 2012 => 2.0, 2015 => 3.5, 2013 => 2.5 }
+a = [{location: "Colorado", score: "Math", timeframe: "2008", dataformat: "Percent", data: "0.697"},
+{location: "Colorado", score: "Reading", timeframe: "2008", dataformat: "Percent", data: "0.703"},
+{location: "Colorado", score: "Writing", timeframe: "2008", dataformat: "Percent", data: "0.501"},
+{location: "Colorado", score: "Math", timeframe: "2009", dataformat: "Percent", data: "0.697"},
+{location: "Colorado", score: "Reading", timeframe: "2009", dataformat: "Percent", data: "0.703"},
+{location: "Colorado", score: "Writing", timeframe: "2009", dataformat: "Percent", data: "0.501"}]
 
-to_merge = match_data(hash1, hash2)
 
-binding.pry
+def collect_data(name, data_set)
+  temp = {}
+  data_set.each do |line|
+      temp[line[:timeframe].to_i] = collect_scores(data_set, line[:timeframe], name) if line[:location] == name
+  end
+  temp
+end
 
-merged = to_merge[0].merge(to_merge[1]) { |date, data1, data2| data1 / data2 }
+def collect_scores(data_set, date, name)
+  score_hash = {}
+  data_set.each do |line|
+    score_hash[line[:score]] = line[:data].to_f if line[:timeframe] == date && line[:location] == name
+  end
+  score_hash
+end
 
-puts merged
+puts collect_data("Colorado",  a)

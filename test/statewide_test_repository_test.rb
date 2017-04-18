@@ -7,6 +7,7 @@ class StatewideTestRepositoryTest < MiniTest::Test
   end
 
   def test_that_it_collects_unique_names
+    skip
   str = StatewideTestRepository.new
     str.load_data({:statewide_testing => {
                     :third_grade => "./data/3rd grade students scoring proficient or above on the CSAP_TCAP.csv"}})
@@ -15,22 +16,107 @@ class StatewideTestRepositoryTest < MiniTest::Test
   end
 
   def test_it_finds_by_name
+    skip
     str = StatewideTestRepository.new
       str.load_data({:statewide_testing => {
                       :third_grade => "./data/3rd grade students scoring proficient or above on the CSAP_TCAP.csv"}})
-    statewide_test = str.find_by_name("YUMA SCHOOL DISTRICT 1")
+    statewide_test = str.find_by_name("ADAMS COUNTY 14")
 
     assert_instance_of StatewideTest, statewide_test
-    assert_equal statewide_test.name, "YUMA SCHOOL DISTRICT 1"
+    assert_equal statewide_test.name, "ADAMS COUNTY 14"
   end
 
   def test_it_cant_find_by_name
+    skip
     str = StatewideTestRepository.new
       str.load_data({:statewide_testing => {
                       :third_grade => "./data/3rd grade students scoring proficient or above on the CSAP_TCAP.csv"}})
 
     assert_nil str.find_by_name("NEVERLAND")
   end
+
+  def test_it_can_load_dynamic_csvs_1
+    skip
+    str = StatewideTestRepository.new
+    loaded = str.load_data({:statewide_testing => {
+                      :third_grade => "./test/fixtures/3rd_grade_fixture.csv"}})
+    expected = {:third_grade => [{location: "Colorado", score: "Math", timeframe: "2008", dataformat: "Percent", data: "0.697"},
+    {location: "Colorado", score: "Reading", timeframe: "2008", dataformat: "Percent", data: "0.703"},
+    {location: "Colorado", score: "Writing", timeframe: "2008", dataformat: "Percent", data: "0.501"}]}
+
+    assert_equal expected, loaded
+  end
+
+  def test_it_can_load_dynamic_csvs_2
+    skip
+    str = StatewideTestRepository.new
+    loaded = str.load_data({:statewide_testing => {
+                      :writing => "./test/fixtures/average_proficiency_writing_fixture.csv"}})
+    expected = {:writing => [
+    {location: "Colorado", race_ethnicity: "All Students",timeframe: "2011",dataformat: "Percent", data: "0.5531"},
+    {location: "Colorado", race_ethnicity: "Asian",timeframe: "2011",dataformat: "Percent", data: "0.6569"},
+    {location: "Colorado", race_ethnicity: "Black",timeframe: "2011",dataformat: "Percent", data: "0.3701"},
+    {location: "Colorado", race_ethnicity: "Hawaiian/Pacific Islander",timeframe: "2011",dataformat: "Percent", data: "0.5583"},
+    {location: "Colorado", race_ethnicity: "Hispanic",timeframe: "2011",dataformat: "Percent", data: "0.368"},
+    {location: "Colorado", race_ethnicity: "Native American",timeframe: "2011",dataformat: "Percent", data: "0.3788"},
+    {location: "Colorado", race_ethnicity: "Two or more",timeframe: "2011",dataformat: "Percent", data: "0.6169"},
+    {location: "Colorado", race_ethnicity: "White",timeframe: "2011",dataformat: "Percent", data: "0.6633"}]}
+
+
+    assert_equal expected, loaded
+  end
+
+  def test_it_can_give_districts_data
+    skip
+    str = StatewideTestRepository.new
+    loaded = str.load_data({:statewide_testing => {
+                      :third_grade => "./test/fixtures/3rd_grade_fixture.csv",
+                      :writing => "./test/fixtures/average_proficiency_writing_fixture.csv"}})
+    expected = { name: "COLORADO",
+    :third_grade =>
+      [ {location: "Colorado", score: "Math", timeframe: "2008", dataformat: "Percent", data: "0.697"},
+        {location: "Colorado", score: "Reading", timeframe: "2008", dataformat: "Percent", data: "0.703"},
+        {location: "Colorado", score: "Writing", timeframe: "2008", dataformat: "Percent", data: "0.501"} ],
+    :writing =>
+      [ {location: "Colorado", race_ethnicity: "All Students",timeframe: "2011",dataformat: "Percent", data: "0.5531"},
+        {location: "Colorado", race_ethnicity: "Asian",timeframe: "2011",dataformat: "Percent", data: "0.6569"},
+        {location: "Colorado", race_ethnicity: "Black",timeframe: "2011",dataformat: "Percent", data: "0.3701"},
+        {location: "Colorado", race_ethnicity: "Hawaiian/Pacific Islander",timeframe: "2011",dataformat: "Percent", data: "0.5583"},
+        {location: "Colorado", race_ethnicity: "Hispanic",timeframe: "2011",dataformat: "Percent", data: "0.368"},
+        {location: "Colorado", race_ethnicity: "Native American",timeframe: "2011",dataformat: "Percent", data: "0.3788"},
+        {location: "Colorado", race_ethnicity: "Two or more",timeframe: "2011",dataformat: "Percent", data: "0.6169"},
+        {location: "Colorado", race_ethnicity: "White",timeframe: "2011",dataformat: "Percent", data: "0.6633"} ]
+    }
+
+    assert_equal expected, str.find_by_name('COLORADO').data
+  end
+
+
+  def test_it_loads_all_files
+    str = StatewideTestRepository.new
+      str.load_data({:statewide_testing => {
+                      :third_grade => "./data/3rd grade students scoring proficient or above on the CSAP_TCAP.csv",
+                      :eighth_grade => "./data/8th grade students scoring proficient or above on the CSAP_TCAP.csv",
+                      :math => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Math.csv",
+                      :reading => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Reading.csv",
+                      :writing => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Writing.csv"}})
+
+      assert_equal "COLORADO", str.find_by_name("COLORADO").name
+  end
+
+  # def test_it_collects_score_data
+  #   str = StatewideTestRepository.new
+  #   loaded = str.load_data({:statewide_testing => {
+  #                     :third_grade => "./test/fixtures/3rd_grade_fixture.csv"}})
+  #   data_set = [{location: "Colorado", score: "Math", timeframe: "2008", dataformat: "Percent", data: "0.697"},
+  #   {location: "Colorado", score: "Reading", timeframe: "2008", dataformat: "Percent", data: "0.703"},
+  #   {location: "Colorado", score: "Writing", timeframe: "2008", dataformat: "Percent", data: "0.501"}]
+  #
+  #   expected = { 2008 => { math: 0.697, reading: 0.703, writing: 0.501 }}
+  #
+  #   assert_equal expected, str.collect_data("Colorado", data_set)
+  # end
+
 
   # def test_it_returns_correct_statewide_test_scores_in_year_data_by_name
   #   answer = { 2007 => 0.391, 2006 => 0.353, 2005 => 0.267, 2004 => 0.302,
@@ -46,20 +132,20 @@ class StatewideTestRepositoryTest < MiniTest::Test
   #   end
   # end
 
-  def test_that_it_has_a_statewide_test_repository
-    str = StatewideTestRepository.new
-    str.load_data({
-      :statewide_testing => {
-        :third_grade => "./data/3rd grade students scoring proficient or above on the CSAP_TCAP.csv",
-        :eighth_grade => "./data/8th grade students scoring proficient or above on the CSAP_TCAP.csv",
-        :math => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Math.csv",
-        :reading => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Reading.csv",
-        :writing => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Writing.csv"
-      }
-    })
-    str = str.find_by_name("ACADEMY 20")
-
-    assert_equal "ACADEMY 20" , str.find_by_name("ACADEMY 20").name
-  end
+  # def test_that_it_has_a_statewide_test_repository
+  #   str = StatewideTestRepository.new
+  #   str.load_data({
+  #     :statewide_testing => {
+  #       :third_grade => "./data/3rd grade students scoring proficient or above on the CSAP_TCAP.csv",
+  #       :eighth_grade => "./data/8th grade students scoring proficient or above on the CSAP_TCAP.csv",
+  #       :math => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Math.csv",
+  #       :reading => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Reading.csv",
+  #       :writing => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Writing.csv"
+  #     }
+  #   })
+  #   str = str.find_by_name("ACADEMY 20")
+  #
+  #   assert_equal "ACADEMY 20" , str.find_by_name("ACADEMY 20").name
+  # end
 
 end
