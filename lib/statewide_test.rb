@@ -41,7 +41,9 @@ class StatewideTest
     grouped = group_data_by(grade_data, :timeframe)
 
     grouped.hash_map do |year, data|
-      {year.to_i => data.hash_map { |line| { line[:score] => line[:data].to_f } } }
+      {year.to_i => data.hash_map do |line|
+        { mk_sym(line[:score]) => line[:data].to_f }
+      end }
     end
   end
 
@@ -71,12 +73,14 @@ class StatewideTest
     collected
   end
 
-
-
 # Helper Methods
 
   def sym_match?(string, sym)
-    string.downcase.gsub(' ', '_').to_sym == sym
+    mk_sym(string) == sym
+  end
+
+  def mk_sym(string)
+    string.downcase.gsub(' ', '_').to_sym
   end
 
   def group_data_by(data_set, header)

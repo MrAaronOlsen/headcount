@@ -19,20 +19,20 @@ class StatewideTestTest < MiniTest::Test
         {location: "Colorado", score: "Reading", timeframe: "2009", dataformat: "Percent", data: "0.255"},
         {location: "Colorado", score: "Writing", timeframe: "2009", dataformat: "Percent", data: "0.266"}],
       math:[
-        {location: 'Colorado', race_ethnicity: 'Asian', timeframe: '2011', dataformat: 'Percent', data: '0.7094'},
-        {location: 'Colorado', race_ethnicity: 'Black', timeframe: '2011', dataformat: 'Percent', data: '0.3333'},
-        {location: 'Colorado', race_ethnicity: 'Asian', timeframe: '2012', dataformat: 'Percent', data: '0.7094'},
-        {location: 'Colorado', race_ethnicity: 'Black', timeframe: '2012', dataformat: 'Percent', data: '0.3333'}],
+        {location: 'Colorado', race_ethnicity: 'Asian', timeframe: '2011', dataformat: 'Percent', data: '0.1111'},
+        {location: 'Colorado', race_ethnicity: 'Black', timeframe: '2011', dataformat: 'Percent', data: '0.1222'},
+        {location: 'Colorado', race_ethnicity: 'Asian', timeframe: '2012', dataformat: 'Percent', data: '0.1333'},
+        {location: 'Colorado', race_ethnicity: 'Black', timeframe: '2012', dataformat: 'Percent', data: '0.1444'}],
       reading:[
-        {location: 'Colorado', race_ethnicity: 'Asian', timeframe: '2011', dataformat: 'Percent', data: '0.7482'},
-        {location: 'Colorado', race_ethnicity: 'Black', timeframe: '2011', dataformat: 'Percent', data: '0.4861'},
-        {location: 'Colorado', race_ethnicity: 'Asian', timeframe: '2012', dataformat: 'Percent', data: '0.7482'},
-        {location: 'Colorado', race_ethnicity: 'Black', timeframe: '2012', dataformat: 'Percent', data: '0.4861'}],
+        {location: 'Colorado', race_ethnicity: 'Asian', timeframe: '2011', dataformat: 'Percent', data: '0.2111'},
+        {location: 'Colorado', race_ethnicity: 'Black', timeframe: '2011', dataformat: 'Percent', data: '0.2222'},
+        {location: 'Colorado', race_ethnicity: 'Asian', timeframe: '2012', dataformat: 'Percent', data: '0.2333'},
+        {location: 'Colorado', race_ethnicity: 'Black', timeframe: '2012', dataformat: 'Percent', data: '0.3444'}],
       writing:[
-        {location: 'Colorado', race_ethnicity: 'Asian', timeframe: '2011', dataformat: 'Percent', data: '0.6569'},
-        {location: 'Colorado', race_ethnicity: 'Black', timeframe: '2011', dataformat: 'Percent', data: '0.3701'},
-        {location: 'Colorado', race_ethnicity: 'Asian', timeframe: '2012', dataformat: 'Percent', data: '0.6569'},
-        {location: 'Colorado', race_ethnicity: 'Black', timeframe: '2012', dataformat: 'Percent', data: '0.3701'}]
+        {location: 'Colorado', race_ethnicity: 'Asian', timeframe: '2011', dataformat: 'Percent', data: '0.3111'},
+        {location: 'Colorado', race_ethnicity: 'Black', timeframe: '2011', dataformat: 'Percent', data: '0.3222'},
+        {location: 'Colorado', race_ethnicity: 'Asian', timeframe: '2012', dataformat: 'Percent', data: '0.3333'},
+        {location: 'Colorado', race_ethnicity: 'Black', timeframe: '2012', dataformat: 'Percent', data: '0.3444'}]
     }
   end
 
@@ -61,10 +61,10 @@ class StatewideTestTest < MiniTest::Test
   def test_that_it_can_parse_proficieny_by_grade
     st = StatewideTest.new("googlygoo")
 
-    third_grade = { 2008 => { "Math" => 0.111, "Reading" =>0.122, "Writing" =>0.133},
-                    2009 => { "Math" => 0.144, "Reading" =>0.155, "Writing" =>0.166} }
-    eighth_grade = { 2008 => { "Math" => 0.211, "Reading" =>0.222, "Writing" =>0.233},
-                    2009 => { "Math" => 0.244, "Reading" =>0.255, "Writing" =>0.266} }
+    third_grade = { 2008 => { math: 0.111, reading: 0.122, writing: 0.133},
+                    2009 => { math: 0.144, reading: 0.155, writing: 0.166} }
+    eighth_grade = { 2008 => { math: 0.211, reading: 0.222, writing: 0.233},
+                    2009 => { math: 0.244, reading: 0.255, writing: 0.266} }
 
     assert_equal third_grade, st.grab_proficiency(@data_sets[:third_grade])
     assert_equal eighth_grade, st.grab_proficiency(@data_sets[:eighth_grade])
@@ -73,10 +73,10 @@ class StatewideTestTest < MiniTest::Test
   def test_that_it_can_find_proficiency_by_grade
     st = StatewideTest.new(@data_sets)
 
-    third_grade = { 2008 => { "Math" => 0.111, "Reading" =>0.122, "Writing" =>0.133},
-                    2009 => { "Math" => 0.144, "Reading" =>0.155, "Writing" =>0.166} }
-    eighth_grade = { 2008 => { "Math" => 0.211, "Reading" =>0.222, "Writing" =>0.233},
-                    2009 => { "Math" => 0.244, "Reading" =>0.255, "Writing" =>0.266} }
+    third_grade = { 2008 => { math: 0.111, reading: 0.122, writing: 0.133},
+                    2009 => { math: 0.144, reading: 0.155, writing: 0.166} }
+    eighth_grade = { 2008 => { math: 0.211, reading: 0.222, writing: 0.233},
+                    2009 => { math: 0.244, reading: 0.255, writing: 0.266} }
 
     assert_equal third_grade, st.proficient_by_grade(3)
     assert_equal eighth_grade, st.proficient_by_grade(8)
@@ -95,30 +95,32 @@ class StatewideTestTest < MiniTest::Test
   end
 
   def test_that_it_can_grab_race_ethnicity_data
+    skip
     st = StatewideTest.new(@data_sets)
 
     expected = {
       :math=>[
-        {:location=>"Colorado", :race_ethnicity=>"Asian", :timeframe=>"2011", :dataformat=>"Percent", :data=>"0.7094"},
-        {:location=>"Colorado", :race_ethnicity=>"Black", :timeframe=>"2011", :dataformat=>"Percent", :data=>"0.3333"},
-        {:location=>"Colorado", :race_ethnicity=>"Asian", :timeframe=>"2012", :dataformat=>"Percent", :data=>"0.7094"},
-        {:location=>"Colorado", :race_ethnicity=>"Black", :timeframe=>"2012", :dataformat=>"Percent", :data=>"0.3333"}],
+        {:location=>"Colorado", :race_ethnicity=>"Asian", :timeframe=>"2011", :dataformat=>"Percent", :data=>"0.1111"},
+        {:location=>"Colorado", :race_ethnicity=>"Black", :timeframe=>"2011", :dataformat=>"Percent", :data=>"0.1222"},
+        {:location=>"Colorado", :race_ethnicity=>"Asian", :timeframe=>"2012", :dataformat=>"Percent", :data=>"0.1333"},
+        {:location=>"Colorado", :race_ethnicity=>"Black", :timeframe=>"2012", :dataformat=>"Percent", :data=>"0.1444"}],
       :reading=>[
-        {:location=>"Colorado", :race_ethnicity=>"Asian", :timeframe=>"2011", :dataformat=>"Percent", :data=>"0.7482"},
-        {:location=>"Colorado", :race_ethnicity=>"Black", :timeframe=>"2011", :dataformat=>"Percent", :data=>"0.4861"},
-        {:location=>"Colorado", :race_ethnicity=>"Asian", :timeframe=>"2012", :dataformat=>"Percent", :data=>"0.7482"},
-        {:location=>"Colorado", :race_ethnicity=>"Black", :timeframe=>"2012", :dataformat=>"Percent", :data=>"0.4861"}],
+        {:location=>"Colorado", :race_ethnicity=>"Asian", :timeframe=>"2011", :dataformat=>"Percent", :data=>"0.2111"},
+        {:location=>"Colorado", :race_ethnicity=>"Black", :timeframe=>"2011", :dataformat=>"Percent", :data=>"0.2222"},
+        {:location=>"Colorado", :race_ethnicity=>"Asian", :timeframe=>"2012", :dataformat=>"Percent", :data=>"0.2333"},
+        {:location=>"Colorado", :race_ethnicity=>"Black", :timeframe=>"2012", :dataformat=>"Percent", :data=>"0.2444"}],
       :writing=>[
-        {:location=>"Colorado", :race_ethnicity=>"Asian", :timeframe=>"2011", :dataformat=>"Percent", :data=>"0.6569"},
-        {:location=>"Colorado", :race_ethnicity=>"Black", :timeframe=>"2011", :dataformat=>"Percent", :data=>"0.3701"},
-        {:location=>"Colorado", :race_ethnicity=>"Asian", :timeframe=>"2012", :dataformat=>"Percent", :data=>"0.6569"},
-        {:location=>"Colorado", :race_ethnicity=>"Black", :timeframe=>"2012", :dataformat=>"Percent", :data=>"0.3701"}]
+        {:location=>"Colorado", :race_ethnicity=>"Asian", :timeframe=>"2011", :dataformat=>"Percent", :data=>"0.3111"},
+        {:location=>"Colorado", :race_ethnicity=>"Black", :timeframe=>"2011", :dataformat=>"Percent", :data=>"0.3222"},
+        {:location=>"Colorado", :race_ethnicity=>"Asian", :timeframe=>"2012", :dataformat=>"Percent", :data=>"0.3333"},
+        {:location=>"Colorado", :race_ethnicity=>"Black", :timeframe=>"2012", :dataformat=>"Percent", :data=>"0.3444"}]
       }
 
     assert_equal st.grab_race_ethnicity_data, expected
   end
 
   def test_that_it_can_collect_race_ethnicity_data_by_subject
+    skip
     st = StatewideTest.new(@data_sets)
     race_data = st.grab_race_ethnicity_data
 
@@ -131,27 +133,34 @@ class StatewideTestTest < MiniTest::Test
     st = StatewideTest.new(@data_sets)
     race_data = st.grab_race_ethnicity_data
 
-    expected = {2011=>{:math=>0.7094, :reading=>0.7482, :writing=>0.6569},
-                2012=>{:math=>0.7094, :reading=>0.7482, :writing=>0.6569}}
+    expected = {2011=>{:math=>0.1111, :reading=>0.2111, :writing=>0.3111},
+                2012=>{:math=>0.1333, :reading=>0.2333, :writing=>0.3333}}
 
     assert_equal st.collect_race_by_date(race_data, :asian), expected
   end
 
   def test_that_it_can_find_proficiency_by_race_or_ethnicity
+    skip
     st = StatewideTest.new(@data_sets)
 
-    expected = {2011=>{:math=>0.7094, :reading=>0.7482, :writing=>0.6569},
-                2012=>{:math=>0.7094, :reading=>0.7482, :writing=>0.6569}}
+    expected = {2011=>{:math=>0.1111, :reading=>0.2111, :writing=>0.3111},
+                2012=>{:math=>0.1333, :reading=>0.2333, :writing=>0.3333}}
 
     assert_equal st.proficient_by_race_or_ethnicity(:asian), expected
   end
 
   def test_that_it_can_find_proficiency_for_subject_by_grade_in_year
+    skip
     st = StatewideTest.new(@data_sets)
 
-    assert_in_delta 0.7482, st.proficient_for_subject_by_grade_in_year(:math, 3, 2009), 0.144
+    assert_in_delta 0.144, st.proficient_for_subject_by_grade_in_year(:math, 3, 2009), 0.005
   end
 
+  def test_that_it_can_find_proficiency_for_subject_by_race_in_year
+    skip
+    st = StatewideTest.new(@data_sets)
 
+    assert_in_delta 0.7094, st.proficient_for_subject_by_race_in_year(:math, :asian, 2011), 0.005
+  end
 
 end

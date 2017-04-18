@@ -8,6 +8,8 @@ class EnrollmentRepository
   end
 
   def load_data(args)
+    return nil if args[:enrollment].nil?
+
     args[:enrollment].each do |data_set, address|
       loader = Load.new(address).load_data( :location, :timeframe,
                                             :dataformat, :data )

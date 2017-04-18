@@ -10,8 +10,9 @@ class DistrictTest < MiniTest::Test
     assert_nil District.new({:name => "ACADEMY 20"}).enrollment
   end
 
-  def test_district_basics
+  def test_that_district_hash_name
     d = District.new({:name => "ACADEMY 20"})
     assert_equal "ACADEMY 20", d.name
   end
+
 end
