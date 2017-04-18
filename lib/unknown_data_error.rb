@@ -1,2 +1,2 @@
-class UnknownDataError < Exception
+class UnknownDataError < StandardError
 end

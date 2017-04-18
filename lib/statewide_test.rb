@@ -1,5 +1,4 @@
 require_relative 'unknown_data_error'
-require_relative 'unknown_race_error'
 require_relative 'headcount_helper'
 require_relative 'enums'
 
@@ -17,10 +16,10 @@ class StatewideTest
 
   def proficient_by_grade(grade)
     grades = {3 => :third_grade, 8 => :eighth_grade}
-    unless grades[grade].nil?
+    begin
       grab_proficiency(@data[grades[grade]])
-    else
-      "No Grade Found"
+    rescue NoMethodError
+      raise UnknownDataError.new
     end
   end
 
@@ -30,11 +29,20 @@ class StatewideTest
   end
 
   def proficient_for_subject_by_grade_in_year(subject, grade, year)
-    proficient_by_grade(grade)[year][subject]
+    begin
+      binding.pry
+      proficient_by_grade(grade)[year][subject]
+    rescue
+      raise UnknownDataError.new
+    end
   end
 
   def proficient_for_subject_by_race_in_year(subject, race, year)
-    proficient_by_race_or_ethnicity(race)[year][subject]
+    begin
+      proficient_by_race_or_ethnicity(race)[year][subject]
+    rescue
+      raise UnknownDataError.new
+    end
   end
 
   def grab_proficiency(grade_data)
@@ -42,7 +50,7 @@ class StatewideTest
 
     grouped.hash_map do |year, data|
       {year.to_i => data.hash_map do |line|
-        { mk_sym(line[:score]) => line[:data].to_f }
+        { mk_sym(line[:score]) => scrub_data(line[:data]) }
       end }
     end
   end
@@ -57,23 +65,33 @@ class StatewideTest
     collected = {}
     race_data.each do |type, data_set|
       data_set.each do |line|
-        collected[line[:timeframe].to_i] = collect_race_by_subject(race_data, race)
+        collected[line[:timeframe].to_i] = collect_race_by_subject(race_data, race, line[:timeframe])
         end
       end
     collected
   end
 
-  def collect_race_by_subject(race_data, race)
+  def collect_race_by_subject(race_data, race, date)
     collected = {}
     race_data.each do |type, data_set|
       data_set.each do |line|
-        collected[type] = line[:data].to_f if sym_match?(line[:race_ethnicity], race)
+        if sym_match?(line[:race_ethnicity], race) && line[:timeframe] == date
+          collected[type] = scrub_data(line[:data])
         end
       end
+    end
     collected
   end
 
 # Helper Methods
+
+  def scrub_data(data)
+    if data.to_f.to_s == data
+      data.to_f
+    else
+      'N/A'
+    end
+  end
 
   def sym_match?(string, sym)
     mk_sym(string) == sym

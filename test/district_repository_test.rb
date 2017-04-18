@@ -60,7 +60,7 @@ class DistrictRepositoryTest < MiniTest::Test
                     })
 
     district = dr.find_by_name("COLORADO")
-    assert_in_delta 0.7094, district.statewide_test.proficient_for_subject_by_race_in_year(:math, :asian, 2012), 0.005
+    assert_in_delta 0.7094, district.statewide_test.proficient_for_subject_by_race_in_year(:math, :asian, 2011), 0.005
   end
 
 end
