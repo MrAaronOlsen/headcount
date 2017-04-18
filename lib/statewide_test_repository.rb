@@ -34,28 +34,21 @@ class StatewideTestRepository
   end
 
   def collect_data(name, data_set)
-    temp = {}
+    temp = []
     data_set.each do |line|
-        temp[line[:timeframe].to_i] = collect_scores(data_set, line[:timeframe], name) if line[:location] == name
+        temp << line if line[:location] == name
     end
     temp
   end
-
-  def collect_scores(data_set, date, name)
-    score_hash = {}
-    data_set.each do |line|
-      score_hash[line[:score]] = line[:data].to_f if line[:timeframe] == date && line[:location] == name
-    end
-    score_hash
-  end
-
-  def collect_ethnicity(data_set, date, name)
-    score_hash = {}
-    data_set.each do |line|
-      score_hash[line[:score]] = line[:data].to_f if line[:timeframe] == date && line[:location] == name
-    end
-    score_hash
-  end
+  #
+  # def collect_scores(data_set, date, name)
+  #   score_hash = {}
+  #   data_set.each do |line|
+  #     # binding.pry
+  #     score_hash[line[:score].downcase.to_sym] = line[:data].to_f if line[:timeframe] == date && line[:location] == name
+  #   end
+  #   score_hash
+  # end
 
   def build_statewide_tests
     names = collect_names
