@@ -91,6 +91,7 @@ class HeadcountAnalyst
    averaged = grouped.hash_map do |dist, data|
      { dist => average(data.map { |pair| pair[1] }) }
    end
+
    averaged.max_by { |line| line[1] }
  end
 
@@ -135,14 +136,12 @@ class HeadcountAnalyst
 
  def find_growths_by_subject(data_set, subject)
    data_set.hash_map do |dist, data_set|
-     binding.pry if dist == "OURAY R-1"
      {dist => calc_growth(data_set, subject)}
    end
  end
 
  def calc_growth(data_set, subject)
    sorted = data_set.sort
-   return 0 if (sorted[1][0] - sorted[0][0]) < 2
 
    (sorted[1][1][subject] - sorted[0][1][subject]) /
            (sorted[1][0] - sorted[0][0])
@@ -172,6 +171,7 @@ class HeadcountAnalyst
   end
 
   def average(data)
+    return 0 if data.length < 2
     data.reduce(0) { |sum, data| sum + data } / data.length
   end
 
