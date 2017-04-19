@@ -19,4 +19,8 @@ class District
     @repositories.find { |repo| repo.is_a? StatewideTest }
   end
 
+  def economic_profile
+    @repositories.find { |repo| repo.is_a? EconomicProfile }
+  end
+
 end
