@@ -16,11 +16,9 @@ class StatewideTest
 
   def proficient_by_grade(grade)
     grades = {3 => :third_grade, 8 => :eighth_grade}
-    begin
-      grab_proficiency(@data[grades[grade]])
-    rescue NoMethodError
-      raise UnknownDataError.new
-    end
+    grab_proficiency(@data[grades[grade]])
+  rescue NoMethodError
+    raise UnknownDataError.new
   end
 
   def proficient_by_race_or_ethnicity(race)
@@ -29,20 +27,15 @@ class StatewideTest
   end
 
   def proficient_for_subject_by_grade_in_year(subject, grade, year)
-    begin
-      binding.pry
-      proficient_by_grade(grade)[year][subject]
-    rescue
-      raise UnknownDataError.new
-    end
+    result = proficient_by_grade(grade)[year][subject]
+    raise UnknownDataError.new if result.nil?
+    result
   end
 
   def proficient_for_subject_by_race_in_year(subject, race, year)
-    begin
-      proficient_by_race_or_ethnicity(race)[year][subject]
-    rescue
-      raise UnknownDataError.new
-    end
+    result = proficient_by_race_or_ethnicity(race)[year][subject]
+    raise UnknownDataError.new if result.nil?
+    result
   end
 
   def grab_proficiency(grade_data)
