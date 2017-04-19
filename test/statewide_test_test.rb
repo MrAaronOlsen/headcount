@@ -82,12 +82,6 @@ class StatewideTestTest < MiniTest::Test
     assert_equal eighth_grade, st.proficient_by_grade(8)
   end
 
-  def test_that_cant_find_grade
-    st = StatewideTest.new("googlygoo")
-
-    assert_equal "No Grade Found", st.proficient_by_grade(10)
-  end
-
   def test_that_it_can_match_symbols_with_strings
     st = StatewideTest.new("googlygoo")
 
@@ -145,6 +139,14 @@ class StatewideTestTest < MiniTest::Test
 
     assert_equal st.proficient_by_race_or_ethnicity(:asian), expected
   end
+
+  def test_that_it_can_raise_data_error
+    st = StatewideTest.new(@data_sets)
+
+    exception = assert_raises(UnknownDataError) { st.proficient_by_grade(6) }
+    assert_equal 'unknown grade', exception.message
+  end
+
 
   def test_that_it_can_find_proficiency_for_subject_by_grade_in_year
     st = StatewideTest.new(@data_sets)
