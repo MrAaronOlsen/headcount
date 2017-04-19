@@ -3,12 +3,10 @@ require_relative 'test_helper'
 class HeadcountAnalystTest < MiniTest::Test
 
   def test_that_it_is_a_headcount_analyst
-    skip
     assert_instance_of HeadcountAnalyst, HeadcountAnalyst.new('dr')
   end
 
   def test_that_it_has_a_district_repository
-    skip
     dr = DistrictRepository.new
     dr.load_data({:enrollment => {
                     :kindergarten => "./data/Kindergartners in full-day program.csv"}})
@@ -18,7 +16,6 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_that_it_can_find_percent_in_a_range
-    skip
     ha = HeadcountAnalyst.new('DoopyDo')
     range = [false, false, true, true, false, true, true, false]
 
@@ -26,7 +23,6 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_that_it_can_predict_significance
-    skip
     ha = HeadcountAnalyst.new('DoopyDo')
 
     assert ha.predict?(70.1)
@@ -34,7 +30,6 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_that_it_can_find_correlation
-    skip
     ha = HeadcountAnalyst.new('DoopyDo')
 
     assert ha.correlation?(0.6)
@@ -44,7 +39,6 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_that_it_can_find_percentiles
-    skip
     ha = HeadcountAnalyst.new('DoopyDo')
 
     assert_in_delta 41.66, ha.percent(5.0, 12.0), 0.05
@@ -52,7 +46,6 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_that_it_can_average_data
-    skip
     dr = DistrictRepository.new
     dr.load_data({:enrollment => {
                     :kindergarten => "./data/Kindergartners in full-day program.csv"}})
@@ -64,7 +57,6 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_that_it_can_match_data
-    skip
     dr = DistrictRepository.new
     dr.load_data({:enrollment => {
                     :kindergarten => "./data/Kindergartners in full-day program.csv"}})
@@ -79,7 +71,6 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_it_can_compare_kindergarted_participation_rates
-    skip
     dr = DistrictRepository.new
     dr.load_data({:enrollment => {
                     :kindergarten => "./data/Kindergartners in full-day program.csv"}})
@@ -90,7 +81,6 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_it_can_compare_kindergarted_participation_trends
-    skip
     answer = { 2004 => 1.257, 2005 => 0.96, 2006 => 1.05, 2007 => 0.992,
                2008 => 0.717, 2009 => 0.652, 2010 => 0.681, 2011 => 0.727,
                2012 => 0.688, 2013 => 0.694, 2014 => 0.661 }
@@ -108,7 +98,6 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_it_can_compare_highschool_graduation_rates
-    skip
     dr = DistrictRepository.new
     dr.load_data({:enrollment => {
                     :kindergarten => "./data/Kindergartners in full-day program.csv",
@@ -119,7 +108,6 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_it_can_compare_high_school_graduation_trends
-    skip
     answer = { 2010 => 1.236, 2011 => 1.211,
                2012 => 1.18, 2013 => 1.188, 2014 => 1.161 }
 
@@ -136,7 +124,6 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_that_it_compare_kindergarten_rates_against_high_school_rates
-    skip
     dr = DistrictRepository.new
     dr.load_data({:enrollment => {
                     :kindergarten => "./data/Kindergartners in full-day program.csv",
@@ -147,7 +134,6 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_that_it_correlates_kindergarten_and_highschool
-    skip
     dr = DistrictRepository.new
     dr.load_data({:enrollment => {
                     :kindergarten => "./data/Kindergartners in full-day program.csv",
@@ -158,7 +144,6 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_that_it_correlates_kindergarten_and_highschool_statewide
-    skip
     dr = DistrictRepository.new
     dr.load_data({:enrollment => {
                     :kindergarten => "./data/Kindergartners in full-day program.csv",
@@ -168,7 +153,6 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_that_it_correlates_kindergarten_and_highschool_range
-    skip
     dr = DistrictRepository.new
     dr.load_data({:enrollment => {
                     :kindergarten => "./data/Kindergartners in full-day program.csv",
@@ -180,7 +164,6 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_that_it_collects_districts_by_grade
-    skip
     dr = DistrictRepository.new
     dr.load_data(:statewide_testing => {
                     :third_grade => "./test/fixtures/3rd_grade_analyst_fixture.csv",
@@ -209,7 +192,6 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_that_it_collects_subject_by_minmax_year
-    skip
     dr = DistrictRepository.new
     dr.load_data(:statewide_testing => {
                     :third_grade => "./test/fixtures/3rd_grade_analyst_fixture.csv",
@@ -230,7 +212,6 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_that_it_can_scub_invalid_data_from_data_set
-    skip
     data_set = {"COLORADO"=> {
                   2008=>{:math=>'#VALUE!', :reading=>0.703, :writing=>0.501},
                   2009=>{:math=>0.691, :reading=>0.726, :writing=>0.536},
@@ -267,7 +248,6 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_that_it_can_deal_with_no_data
-    skip
     data_set = {"COLORADO"=> {
                   2008=>{:math=>'#VALUE!', :reading=>0.703, :writing=>0.501},
                   2009=>{:math=>'#VALUE!', :reading=>0.726, :writing=>0.536},
@@ -298,7 +278,6 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_that_it_can_calculate_growth
-    skip
     ha = HeadcountAnalyst.new('boopydo')
     query = { 2008=>{:math=>0.697, :reading=>0.703, :writing=>0.501},
               2014=>{:math=>0.71589, :reading=>0.71581, :writing=>0.51072} }
@@ -307,7 +286,6 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_that_it_can_find_growths_by_subject
-    skip
     dr = DistrictRepository.new
     dr.load_data(:statewide_testing => {
                     :third_grade => "./test/fixtures/3rd_grade_analyst_fixture.csv",
@@ -325,7 +303,6 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_that_can_find_top_growth_by_grade_subject
-    skip
     dr = DistrictRepository.new
     dr.load_data(:statewide_testing => {
                     :third_grade => "./data/3rd grade students scoring proficient or above on the CSAP_TCAP.csv",
@@ -344,7 +321,6 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_that_it_raises_errors
-    skip
     dr = DistrictRepository.new
     ha = HeadcountAnalyst.new(dr)
 
@@ -358,7 +334,6 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_that_it_returns_more_than_one_top_district
-    skip
     dr = DistrictRepository.new
     dr.load_data(:statewide_testing => {
                     :third_grade => "./data/3rd grade students scoring proficient or above on the CSAP_TCAP.csv",
@@ -374,7 +349,6 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_that_it_collect_all_subjects
-    skip
     dr = DistrictRepository.new
     dr.load_data(:statewide_testing => {
                     :third_grade => "./test/fixtures/3rd_grade_analyst_dirty_fixture.csv"})
@@ -395,7 +369,6 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_that_it_finds_top_growth_by_grade
-    skip
     dr = DistrictRepository.new
     dr.load_data(:statewide_testing => {
                     :third_grade => "./test/fixtures/3rd_grade_analyst_dirty_fixture.csv"})
