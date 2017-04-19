@@ -31,7 +31,7 @@ class StatewideTest
     result
   end
 
- def proficient_for_subject_by_race_in_year(subject, race, year)
+ def proficient_for_subject_byc_race_in_year(subject, race, year)
     result = proficient_by_race_or_ethnicity(race)[year][subject]
     raise UnknownDataError.new if result.nil?
     result

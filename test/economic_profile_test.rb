@@ -32,5 +32,17 @@ class EconomicProfileTest < MiniTest::Test
     assert_equal [2005, 2006, 2007, 2008, 2009], ep.string_to_range("2005-2009")
   end
 
+  def test_that_it_calculates_mean_income_in_year
+    ep = EconomicProfile.new(@data_set_1)
+
+    assert_equal 56787, ep.median_household_income_in_year(2007)
+  end
+
+  def test_it_can_find_amalgam_mean_income
+    ep = EconomicProfile.new(@data_set_1)
+
+    assert_equal 57408, ep.median_household_income_average
+
+  end
 
 end
