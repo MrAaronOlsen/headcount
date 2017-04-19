@@ -23,7 +23,28 @@ class EconomicProfileTest < MiniTest::Test
       {:location=>"ACADEMY 20", :timeframe=>"2010", :dataformat=>"Number", :data=>"1251"},
       {:location=>"ACADEMY 20", :timeframe=>"2010", :dataformat=>"Percent", :data=>"0.05754"},
       {:location=>"ACADEMY 20", :timeframe=>"2011", :dataformat=>"Number", :data=>"1279"}]}
- end
+    @reduced_lunch_price_data_setup =
+    {:name=>"COLORADO",
+   :free_or_reduced_price_lunch=>
+    [{:location=>"Colorado", :poverty_level=>"Eligible for Reduced Price Lunch", :timeframe=>"2000", :dataformat=>"Percent", :data=>"0.07"},
+     {:location=>"Colorado", :poverty_level=>"Eligible for Free or Reduced Lunch", :timeframe=>"2000", :dataformat=>"Percent", :data=>"0.27"},
+     {:location=>"Colorado", :poverty_level=>"Eligible for Free Lunch", :timeframe=>"2000", :dataformat=>"Percent", :data=>"0.2"},
+     {:location=>"Colorado", :poverty_level=>"Eligible for Reduced Price Lunch", :timeframe=>"2000", :dataformat=>"Number", :data=>"50698"},
+     {:location=>"Colorado", :poverty_level=>"Eligible for Free Lunch", :timeframe=>"2000", :dataformat=>"Number", :data=>"144451"},
+     {:location=>"Colorado", :poverty_level=>"Eligible for Free or Reduced Lunch", :timeframe=>"2000", :dataformat=>"Number", :data=>"195149"},
+     {:location=>"Colorado", :poverty_level=>"Eligible for Reduced Price Lunch", :timeframe=>"2001", :dataformat=>"Number", :data=>"51998"},
+     {:location=>"Colorado", :poverty_level=>"Eligible for Free or Reduced Lunch", :timeframe=>"2001", :dataformat=>"Number", :data=>"204299"},
+     {:location=>"Colorado", :poverty_level=>"Eligible for Free Lunch", :timeframe=>"2001", :dataformat=>"Number", :data=>"152301"},
+     {:location=>"Colorado", :poverty_level=>"Eligible for Free Lunch", :timeframe=>"2001", :dataformat=>"Percent", :data=>"0.20522"},
+     {:location=>"Colorado", :poverty_level=>"Eligible for Free or Reduced Lunch", :timeframe=>"2001", :dataformat=>"Percent", :data=>"0.27528"},
+     {:location=>"Colorado", :poverty_level=>"Eligible for Reduced Price Lunch", :timeframe=>"2001", :dataformat=>"Percent", :data=>"0.07006"},
+     {:location=>"Colorado", :poverty_level=>"Eligible for Free Lunch", :timeframe=>"2002", :dataformat=>"Percent", :data=>"0.2196"},
+     {:location=>"Colorado", :poverty_level=>"Eligible for Free or Reduced Lunch", :timeframe=>"2002", :dataformat=>"Percent", :data=>"0.28509"},
+     {:location=>"Colorado", :poverty_level=>"Eligible for Reduced Price Lunch", :timeframe=>"2002", :dataformat=>"Percent", :data=>"0.06549"},
+     {:location=>"Colorado", :poverty_level=>"Eligible for Reduced Price Lunch", :timeframe=>"2002", :dataformat=>"Number", :data=>"49242"},
+     {:location=>"Colorado", :poverty_level=>"Eligible for Free or Reduced Lunch", :timeframe=>"2002", :dataformat=>"Number", :data=>"214349"},
+     {:location=>"Colorado", :poverty_level=>"Eligible for Free Lunch", :timeframe=>"2002", :dataformat=>"Number", :data=>"165107"}]}
+  end
 
 
   def test_that_it_is_an_economic_profile
@@ -53,8 +74,20 @@ class EconomicProfileTest < MiniTest::Test
   def test_it_can_find_poverty_percentage_in_year
     ep = EconomicProfile.new(@child_poverty_data_setup)
 
-    assert_equal 0.04404, ep.children_in_poverty_in_year(2008)
+    assert_equal 0.04404, ep.children_in_poverty_in_year(2001)
   end
+
+  def test_it_can_find_reduced_lunch_price_number_in_year
+    ep = EconomicProfile.new(@reduced_lunch_price_data_setup)
+
+    assert_equal 408598, ep.free_or_reduced_price_lunch_number_in_year(2001)
+  end
+
+  # def test_it_can_find_reduced_lunch_price_number_in_year
+  #   ep = EconomicProfile.new(@reduced_lunch_price_data_setup)
+  #
+  #   assert_equal 408598, ep.free_or_reduced_price_lunch_number_in_year(2001)
+  # end
 
 
 
