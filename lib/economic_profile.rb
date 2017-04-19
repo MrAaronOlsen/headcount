@@ -46,10 +46,8 @@ class EconomicProfile
   def free_or_reduced_price_lunch_percentage_in_year(year)
     desired = []
     @data[:free_or_reduced_price_lunch].each do |line|
-      if line[:timeframe] == "#{year}" && line[:dataformat] == "Percent"
-        if line[:poverty_level] == "Eligible for Free or Reduced Lunch"
-          desired << line[:data]
-        end
+      if right_year?(line, year) && percent?(line) && free_or_reduced?(line)
+        desired << line[:data]
       end
     end
     desired[0].to_f
@@ -58,14 +56,28 @@ class EconomicProfile
   def free_or_reduced_price_lunch_number_in_year(year)
     desired = []
     @data[:free_or_reduced_price_lunch].each do |line|
-      if line[:timeframe] == "#{year}" && line[:dataformat] == "Number"
-        if line[:poverty_level] == "Eligible for Free or Reduced Lunch"
-          desired << line[:data]
-        end
+      if right_year?(line, year) && number?(line) && free_or_reduced?(line)
+        desired << line[:data]
       end
     end
     raise UnknownDataError.new('unknown year') if desired[0].nil?
     desired[0].to_f
+  end
+
+  def right_year?(line, year)
+    line[:timeframe] == "#{year}"
+  end
+
+  def number?(line)
+    line[:dataformat] == "Number"
+  end
+
+  def percent?(line)
+    line[:dataformat] == "Percent"
+  end
+
+  def free_or_reduced?(line)
+    line[:poverty_level] == "Eligible for Free or Reduced Lunch"
   end
 
   def title_i_in_year(year)
