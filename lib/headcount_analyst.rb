@@ -10,6 +10,8 @@ class HeadcountAnalyst
     @repo.find_by_name(name)
   end
 
+# enrollment analyst
+
   def kindergarten_participation_rate_variation(loc_1, loc_2)
     compare = [loc_1, loc_2[:against]].map do |name|
       find_by_name(name).enrollment.kindergarten_participation_by_year
@@ -66,6 +68,84 @@ class HeadcountAnalyst
 
   alias :kp_cor_hsg
     :kindergarten_participation_correlates_with_high_school_graduation
+
+# statewide analyst
+
+ def top_statewide_test_year_over_year_growth(args)
+   query = {grade: args[:grade], subject: args[:subject]}
+   query[:top] = args[:top] || 1
+
+   raise InsufficientInformationError.new if query[:grade].nil?
+   raise UnknownDataError.new unless [3, 8].include?(query[:grade])
+
+   if query[:subject].nil?
+     find_top_growth_by_grade(query[:grade])
+   else
+     find_top_growth_by_grade_subject(query[:grade], query[:subject], query[:top])
+   end
+ end
+
+ def find_top_growth_by_grade(grade)
+   all_subject = collect_growth_across_all_subjects(grade)
+   grouped = all_subject.flatten(1).group_by { |line| line[0] }
+   grouped.hash_map do |dist, data|
+     { dist => average(data.map { |pair| pair[1] }) }
+   end.max_by
+ end
+
+ def collect_growth_across_all_subjects(grade)
+   [:math, :reading, :writing].map do |subject|
+     find_growth_by_grade_subject(grade, subject)
+   end
+ end
+
+ def find_top_growth_by_grade_subject(grade, subject, top = 1)
+   results = find_growth_by_grade_subject(grade, subject)
+   if top == 1 then results[-1] else results[-top..-1] end
+ end
+
+ def find_growth_by_grade_subject(grade, subject)
+   by_grade = collect_districts_by_grade(grade)
+   scrubbed = scrub_invalid_data_by_subject(by_grade, subject)
+   minmax = collect_districts_by_minmax_year(scrubbed)
+   growths = find_growths_by_subject(minmax, subject)
+   growths.sort_by { |dist, growth| growth }
+ end
+
+ def collect_districts_by_grade(grade)
+   @repo.districts.hash_map do |dist|
+     {dist.name => dist.statewide_test.proficient_by_grade(grade)}
+   end
+ end
+
+ def collect_districts_by_minmax_year(data_set)
+   data_set.hash_map do |dist, data_set|
+     {dist => data_set.minmax_by { |year, subjects| year }.to_h }
+   end
+ end
+
+ def scrub_invalid_data_by_subject(data_sets, subject)
+   data_sets.delete_if do |district, data_set|
+     data_set.delete_if do |date, subjects|
+       invalid_data?(subjects[subject])
+     end.length < 2
+   end
+ end
+
+ def find_growths_by_subject(data_set, subject)
+   data_set.hash_map do |dist, data_set|
+     {dist => calc_growth(data_set, subject)}
+   end
+ end
+
+ def calc_growth(data_set, subject)
+   (data_set.max[1][subject] - data_set.min[1][subject]) /
+           (data_set.max[0] - data_set.min[0])
+ end
+
+ def invalid_data?(data)
+   data.is_a? String
+ end
 
 # helper methods
 
