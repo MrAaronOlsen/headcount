@@ -29,17 +29,15 @@ class StatewideTest
   end
 
   def proficient_for_subject_by_grade_in_year(subject, grade, year)
-    proficient_subject = proficient_by_grade(grade)[year][subject]
-
-    raise UnknownDataError.new unless proficient_subject
-
-    proficient_subject
+    result = proficient_by_grade(grade)[year][subject]
+    raise UnknownDataError.new if proficient_subject.nil?
+    result
   end
-
-  def proficient_for_subject_by_race_in_year(subject, race, year)
-    proficient_by_race_or_ethnicity(race)[year][subject]
-  rescue
-    raise UnknownDataError.new
+  
+ def proficient_for_subject_by_race_in_year(subject, race, year)
+    result = proficient_by_race_or_ethnicity(race)[year][subject]
+    raise UnknownDataError.new if result.nil?
+    result
   end
 
   def grab_proficiency(grade_data)
