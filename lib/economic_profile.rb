@@ -34,7 +34,13 @@ class EconomicProfile
   end
 
   def children_in_poverty_in_year(year)
-    
+    desired = []
+    @data[:children_in_poverty].each do |line|
+      if line[:timeframe] == "#{year}" && line[:dataformat] == "Percent"
+        desired << line[:data]
+      end
+    end
+    desired[0].to_f
   end
 
   def free_or_reduced_price_lunch_percentage_in_year(year)
