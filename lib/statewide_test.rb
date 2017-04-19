@@ -19,7 +19,7 @@ class StatewideTest
     begin
       grab_proficiency(@data[grades[grade]])
     rescue NoMethodError
-      raise UnknownDataError.new
+      raise UnknownDataError.new('unknown grade')
     end
   end
 
@@ -29,20 +29,17 @@ class StatewideTest
   end
 
   def proficient_for_subject_by_grade_in_year(subject, grade, year)
-    begin
-      binding.pry
-      proficient_by_grade(grade)[year][subject]
-    rescue
-      raise UnknownDataError.new
-    end
+    proficient_subject = proficient_by_grade(grade)[year][subject]
+
+    raise UnknownDataError.new unless proficient_subject
+
+    proficient_subject
   end
 
   def proficient_for_subject_by_race_in_year(subject, race, year)
-    begin
-      proficient_by_race_or_ethnicity(race)[year][subject]
-    rescue
-      raise UnknownDataError.new
-    end
+    proficient_by_race_or_ethnicity(race)[year][subject]
+  rescue
+    raise UnknownDataError.new
   end
 
   def grab_proficiency(grade_data)
