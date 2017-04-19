@@ -11,32 +11,72 @@ class EconomicProfile
   end
 
   def median_household_income_in_year(year)
-    income_averages = []
+    income_years = []
     data[:median_houshold_income].each do |line|
       year_range = string_to_range(line[:timeframe])
-      income_averages << line[:data] if year_range.include?(year)
+      income_years << line[:data] if year_range.include?(year)
     end
+    income_integers = income_years.map { |yr| yr.to_i}
+    income_integers.inject(:+) / income_years.count
   end
 
   def string_to_range(string_years)
-    range = (string_years[0..3]..string_years[0..3]).to_a
-    binding.pry
+    range = (string_years[0..3]..string_years[5..8]).to_a
     range.map{|yr| yr.to_i}
   end
 
   def median_household_income_average
+    incomes = []
+    @data[:median_houshold_income].each do |line|
+       incomes << line[:data].to_i
+     end
+   incomes.inject(:+) / incomes.count
   end
 
   def children_in_poverty_in_year(year)
+    desired = []
+    @data[:children_in_poverty].each do |line|
+      if line[:timeframe] == "#{year}" && line[:dataformat] == "Percent"
+        desired << line[:data]
+      end
+    end
+    desired[0].to_f
   end
 
   def free_or_reduced_price_lunch_percentage_in_year(year)
+    desired = []
+    @data[:free_or_reduced_price_lunch].each do |line|
+      if line[:timeframe] == "#{year}" && line[:dataformat] == "Percent"
+        if line[:poverty_level] == "Eligible for Free or Reduced Lunch"
+          desired << line[:data]
+        end
+      end
+    end
+    desired[0].to_f
   end
 
   def free_or_reduced_price_lunch_number_in_year(year)
+    desired = []
+    @data[:free_or_reduced_price_lunch].each do |line|
+      if line[:timeframe] == "#{year}" && line[:dataformat] == "Number"
+        if line[:poverty_level] == "Eligible for Free or Reduced Lunch"
+          desired << line[:data]
+        end
+      end
+    end
+    raise UnknownDataError.new('unknown year') if desired[0].nil?
+    desired[0].to_f
   end
 
   def title_i_in_year(year)
+    desired = []
+    @data[:title_i].each do |line|
+      if line[:timeframe] == "#{year}"
+        desired << line[:data]
+      end
+    end
+    raise UnknownDataError.new('unknown year') if desired[0].nil?
+    desired[0].to_f
   end
 
 end
