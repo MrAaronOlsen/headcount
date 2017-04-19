@@ -374,6 +374,7 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_that_it_collect_all_subjects
+    skip
     dr = DistrictRepository.new
     dr.load_data(:statewide_testing => {
                     :third_grade => "./test/fixtures/3rd_grade_analyst_dirty_fixture.csv"})
@@ -394,19 +395,19 @@ class HeadcountAnalystTest < MiniTest::Test
   end
 
   def test_that_it_finds_top_growth_by_grade
+    skip
     dr = DistrictRepository.new
     dr.load_data(:statewide_testing => {
                     :third_grade => "./test/fixtures/3rd_grade_analyst_dirty_fixture.csv"})
     ha = HeadcountAnalyst.new(dr)
 
-    expected = {"ACADEMY 20"=>-0.0028596666666666584, "BAYFIELD 10 JT-R"=>0.006537777777777777}
+    expected = ["BAYFIELD 10 JT-R", 0.006537777777777777]
 
     assert_equal ha.find_top_growth_by_grade(3), expected
   end
 
 
   def test_that_it_can_find_top_growth_by_grade
-    skip
     dr = DistrictRepository.new
     dr.load_data(:statewide_testing => {
                     :third_grade => "./data/3rd grade students scoring proficient or above on the CSAP_TCAP.csv",

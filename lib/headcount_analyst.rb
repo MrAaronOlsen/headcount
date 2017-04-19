@@ -88,9 +88,10 @@ class HeadcountAnalyst
  def find_top_growth_by_grade(grade)
    all_subject = collect_growth_across_all_subjects(grade)
    grouped = all_subject.flatten(1).group_by { |line| line[0] }
-   grouped.hash_map do |dist, data|
+   averaged = grouped.hash_map do |dist, data|
      { dist => average(data.map { |pair| pair[1] }) }
-   end.max_by
+   end
+   averaged.max_by { |line| line[1] }
  end
 
  def collect_growth_across_all_subjects(grade)
@@ -134,13 +135,17 @@ class HeadcountAnalyst
 
  def find_growths_by_subject(data_set, subject)
    data_set.hash_map do |dist, data_set|
+     binding.pry if dist == "OURAY R-1"
      {dist => calc_growth(data_set, subject)}
    end
  end
 
  def calc_growth(data_set, subject)
-   (data_set.max[1][subject] - data_set.min[1][subject]) /
-           (data_set.max[0] - data_set.min[0])
+   sorted = data_set.sort
+   return 0 if (sorted[1][0] - sorted[0][0]) < 2
+
+   (sorted[1][1][subject] - sorted[0][1][subject]) /
+           (sorted[1][0] - sorted[0][0])
  end
 
  def invalid_data?(data)
