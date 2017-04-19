@@ -52,23 +52,31 @@ class EconomicProfile
         end
       end
     end
-    
     desired[0].to_f
   end
 
   def free_or_reduced_price_lunch_number_in_year(year)
     desired = []
     @data[:free_or_reduced_price_lunch].each do |line|
-      if line[:timeframe] == "#{year}" && line[:dataformat] == "Percent"
+      if line[:timeframe] == "#{year}" && line[:dataformat] == "Number"
         if line[:poverty_level] == "Eligible for Free or Reduced Lunch"
           desired << line[:data]
         end
       end
     end
+    raise UnknownDataError.new('unknown year') if desired[0].nil?
     desired[0].to_f
   end
 
   def title_i_in_year(year)
+    desired = []
+    @data[:title_i].each do |line|
+      if line[:timeframe] == "#{year}"
+        desired << line[:data]
+      end
+    end
+    raise UnknownDataError.new('unknown year') if desired[0].nil?
+    desired[0].to_f
   end
 
 end

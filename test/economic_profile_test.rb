@@ -44,6 +44,15 @@ class EconomicProfileTest < MiniTest::Test
      {:location=>"Colorado", :poverty_level=>"Eligible for Reduced Price Lunch", :timeframe=>"2002", :dataformat=>"Number", :data=>"49242"},
      {:location=>"Colorado", :poverty_level=>"Eligible for Free or Reduced Lunch", :timeframe=>"2002", :dataformat=>"Number", :data=>"214349"},
      {:location=>"Colorado", :poverty_level=>"Eligible for Free Lunch", :timeframe=>"2002", :dataformat=>"Number", :data=>"165107"}]}
+
+     @title_i_data_setup =
+     {:name=>"ACADEMY 20",
+      :title_i=>
+     [{:location=>"ACADEMY 20", :timeframe=>"2009", :dataformat=>"Percent", :data=>"0.014"},
+      {:location=>"ACADEMY 20", :timeframe=>"2011", :dataformat=>"Percent", :data=>"0.011"},
+      {:location=>"ACADEMY 20", :timeframe=>"2012", :dataformat=>"Percent", :data=>"0.01072"},
+      {:location=>"ACADEMY 20", :timeframe=>"2013", :dataformat=>"Percent", :data=>"0.01246"},
+      {:location=>"ACADEMY 20", :timeframe=>"2014", :dataformat=>"Percent", :data=>"0.0273"}]}
   end
 
 
@@ -74,21 +83,40 @@ class EconomicProfileTest < MiniTest::Test
   def test_it_can_find_poverty_percentage_in_year
     ep = EconomicProfile.new(@child_poverty_data_setup)
 
-    assert_equal 0.04404, ep.children_in_poverty_in_year(2001)
+    assert_equal 0.04404, ep.children_in_poverty_in_year(2008)
+  end
+
+  def test_it_can_find_reduced_lunch_price_percentage_in_year
+    ep = EconomicProfile.new(@reduced_lunch_price_data_setup)
+
+    assert_equal 0.27528, ep.free_or_reduced_price_lunch_percentage_in_year(2001)
   end
 
   def test_it_can_find_reduced_lunch_price_number_in_year
     ep = EconomicProfile.new(@reduced_lunch_price_data_setup)
 
-    assert_equal 408598, ep.free_or_reduced_price_lunch_number_in_year(2001)
+    assert_equal 204299, ep.free_or_reduced_price_lunch_number_in_year(2001)
   end
 
-  # def test_it_can_find_reduced_lunch_price_number_in_year
-  #   ep = EconomicProfile.new(@reduced_lunch_price_data_setup)
-  #
-  #   assert_equal 408598, ep.free_or_reduced_price_lunch_number_in_year(2001)
-  # end
+  def test_it_can_raise_error_for_poverty_percentage
+    ep = EconomicProfile.new(@reduced_lunch_price_data_setup)
 
+    exception = assert_raises(UnknownDataError) { ep.free_or_reduced_price_lunch_number_in_year(1312) }
+    assert_equal 'unknown year', exception.message
+  end
+
+  def test_it_can_find_title_i_in_year
+    ep = EconomicProfile.new(@title_i_data_setup)
+
+    assert_equal 0.01072, ep.title_i_in_year(2012)
+  end
+
+  def test_it_can_raise_error_for_title_i
+    ep = EconomicProfile.new(@title_i_data_setup)
+
+    exception = assert_raises(UnknownDataError) { ep.title_i_in_year(1312) }
+    assert_equal 'unknown year', exception.message
+  end
 
 
 end
