@@ -1,2 +1,0 @@
-class UnknownDataError < StandardError
-end
