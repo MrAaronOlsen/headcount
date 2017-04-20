@@ -12,7 +12,8 @@ class EconomicProfile
 
   def median_household_income_in_year(year)
     income_years = []
-    data[:median_houshold_income].each do |line|
+    data[:median_household_income].each do |line|
+      binding.pry
       year_range = string_to_range(line[:timeframe])
       income_years << line[:data] if year_range.include?(year)
     end

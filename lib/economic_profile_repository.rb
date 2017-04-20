@@ -15,7 +15,15 @@ class EconomicProfileRepository
                                             :dataformat, :data )
       @data_sets[data_set] = loader_cleaner(loader)
     end
+    # parse_data(loader)
     build_economic_profiles
+    binding.pry
+
+  end
+
+  def parse_data(loader)
+
+
   end
 
   def build_economic_profiles

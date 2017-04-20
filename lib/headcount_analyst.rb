@@ -72,27 +72,50 @@ class HeadcountAnalyst
 # statewide analyst
 
  def top_statewide_test_year_over_year_growth(args)
-   query = {grade: args[:grade], subject: args[:subject]}
+   query = {grade: args[:grade], subject: args[:subject],
+            weighting: args[:weighting]}
    query[:top] = args[:top] || 1
 
    raise InsufficientInformationError.new if query[:grade].nil?
    raise UnknownDataError.new unless [3, 8].include?(query[:grade])
 
    if query[:subject].nil?
-     find_top_growth_by_grade(query[:grade])
+     find_top_growth_by_grade(query[:grade], query[:weighting])
    else
      find_top_growth_by_grade_subject(query[:grade], query[:subject], query[:top])
    end
  end
 
- def find_top_growth_by_grade(grade)
+ def find_top_growth_by_grade(grade, weight)
    all_subject = collect_growth_across_all_subjects(grade)
    grouped = all_subject.flatten(1).group_by { |line| line[0] }
-   averaged = grouped.hash_map do |dist, data|
-     { dist => average(data.map { |pair| pair[1] }) }
+   if weight.nil?
+     averaged = average_growth(grouped)
+   else
+     averaged = average_weight_growth(grouped, weight)
    end
-
    averaged.max_by { |line| line[1] }
+ end
+
+ def average_growth(grouped)
+   grouped.hash_map do |dist, data|
+     { dist => average(data.map { |pair| pair[1][0] }) }
+   end
+ end
+
+ def average_weight_growth(grouped, weight)
+   grouped.hash_map do |dist, data|
+     { dist => add_average(data.map { |pair| add_weight(pair[1], weight)}) }
+   end
+ end
+
+ def add_weight(pair, weight)
+   weighted = weight.merge({pair[1] => pair[0]}) { |subject, d1, d2| d1 * d2}
+   weighted[pair[1]]
+ end
+
+ def add_average(set)
+   set.reduce(0) { |sum, num| sum + num }
  end
 
  def collect_growth_across_all_subjects(grade)
@@ -103,7 +126,9 @@ class HeadcountAnalyst
 
  def find_top_growth_by_grade_subject(grade, subject, top = 1)
    results = find_growth_by_grade_subject(grade, subject)
-   if top == 1 then results[-1] else results[-top..-1] end
+   scrubbed = results.map { |line| line.flatten }
+   fixed = scrubbed.map { |line| line[0..1] }
+   if top == 1 then fixed[-1] else fixed[-top..-1] end
  end
 
  def find_growth_by_grade_subject(grade, subject)
@@ -120,6 +145,13 @@ class HeadcountAnalyst
    end
  end
 
+ # def weight_data(weight, data_set)
+ #   data_set.hash_map do |dist, data|
+ #     {dist => data.hash_map do |year, line|
+ #       {year => line.merge(weight) { |key, d1, d2| d1 * d2 }}
+ #     end}
+ # end
+
  def collect_districts_by_minmax_year(data_set)
    data_set.hash_map do |dist, data_set|
      {dist => data_set.minmax_by { |year, subjects| year }.to_h }
@@ -134,15 +166,14 @@ class HeadcountAnalyst
    end
  end
 
- def find_growths_by_subject(data_set, subject)
-   data_set.hash_map do |dist, data_set|
-     {dist => calc_growth(data_set, subject)}
+ def find_growths_by_subject(data_sets, subject)
+   data_sets.hash_map do |dist, data_set|
+     {dist => [calc_growth(data_set, subject), subject]}
    end
  end
 
  def calc_growth(data_set, subject)
    sorted = data_set.sort
-
    (sorted[1][1][subject] - sorted[0][1][subject]) /
            (sorted[1][0] - sorted[0][0])
  end
@@ -170,9 +201,9 @@ class HeadcountAnalyst
     percent range.count(arg), range.count
   end
 
-  def average(data)
-    return 0 if data.length < 2
-    data.reduce(0) { |sum, data| sum + data } / data.length
+  def average(data_set)
+    return 0 if data_set.length < 2
+    data_set.reduce(0) { |sum, data| sum + data } / data_set.length
   end
 
   def match_data(first, second)
