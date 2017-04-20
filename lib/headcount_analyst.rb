@@ -75,7 +75,7 @@ class HeadcountAnalyst
    query = {grade: args[:grade], subject: args[:subject],
             weighting: args[:weighting]}
    query[:top] = args[:top] || 1
-
+   binding.pry
    raise InsufficientInformationError.new if query[:grade].nil?
    raise UnknownDataError.new unless [3, 8].include?(query[:grade])
 
