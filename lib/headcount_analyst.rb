@@ -81,7 +81,9 @@ class HeadcountAnalyst
    if query[:subject].nil?
      find_top_growth_by_grade(query[:grade], query[:weighting])
    else
-     find_top_growth_by_grade_subject(query[:grade], query[:subject], query[:top])
+     find_top_growth_by_grade_subject(query[:grade],
+                                      query[:subject],
+                                      query[:top])
    end
  end
 

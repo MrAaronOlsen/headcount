@@ -57,7 +57,8 @@ class StatewideTest
     collected = {}
     race_data.each do |type, data_set|
       data_set.each do |line|
-        collected[line[:timeframe].to_i] = collect_race_by_subject(race_data, race, line[:timeframe])
+        collected[line[:timeframe].to_i] =
+          collect_race_by_subject(race_data, race, line[:timeframe])
         end
       end
     collected

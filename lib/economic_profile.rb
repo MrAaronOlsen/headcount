@@ -36,12 +36,14 @@ class EconomicProfile
     @data[:children_in_poverty].each do |line|
       return line[1] if line[0] == year
     end
+    raise UnknownDataError.new('unknown year')
   end
 
   def free_or_reduced_price_lunch_percentage_in_year(year)
     @data[:free_or_reduced_price_lunch].each do |line|
       return line[1][:percentage] if line[0] == year
     end
+    raise UnknownDataError.new('unknown year')
   end
 
   def free_or_reduced_price_lunch_number_in_year(year)
