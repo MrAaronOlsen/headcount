@@ -7,7 +7,8 @@ class DistrictRepository
   def initialize
     @districts = []
     @repositories = [EnrollmentRepository.new,
-                     StatewideTestRepository.new]
+                     StatewideTestRepository.new,
+                     EconomicProfileRepository.new]
   end
 
   def load_data(args)
