@@ -1,7 +1,6 @@
 require_relative 'headcount_helper'
 
 class EnrollmentRepository
-
   def initialize
     @data_sets = {}
     @enrollments = []
@@ -11,22 +10,15 @@ class EnrollmentRepository
     return nil if args[:enrollment].nil?
 
     args[:enrollment].each do |data_set, address|
-      loader = Load.new(address).load_data( :location, :timeframe,
-                                            :dataformat, :data )
+      loader = Load.new(address).load_data( :location,
+                                            :timeframe,
+                                            :dataformat,
+                                            :data )
+
 
       @data_sets[data_set] = loader
     end
     build_enrollments
-  end
-
-  def find_by_name(name)
-    @enrollments.find { |enrollment| enrollment.name == name }
-  end
-
-  def collect_names
-    @data_sets.reduce([]) do |all_names, data_set|
-      all_names |= data_set[1].map { |line| line[:location] }
-    end
   end
 
   def build_enrollments
@@ -44,6 +36,12 @@ class EnrollmentRepository
 
   end
 
+  def collect_names
+    @data_sets.reduce([]) do |all_names, data_set|
+      all_names |= data_set[1].map { |line| line[:location] }
+    end
+  end
+
   def collect_data(name, data_set)
     temp = {}
     data_set.each do |line|
@@ -52,4 +50,7 @@ class EnrollmentRepository
     temp
   end
 
+  def find_by_name(name)
+    @enrollments.find { |enrollment| enrollment.name == name }
+  end
 end
