@@ -1,7 +1,6 @@
 require_relative 'headcount_helper'
 
 class EconomicProfileRepository
-
   def initialize
     @data_sets = {}
     @economic_profiles = []
@@ -11,8 +10,12 @@ class EconomicProfileRepository
     return nil if args[:economic_profile].nil?
 
     args[:economic_profile].each do |data_set, address|
-      loader = Load.new(address).load_data( :location, :poverty_level, :timeframe,
-                                            :dataformat, :data )
+      loader = Load.new(address).load_data( :location,
+                                            :poverty_level,
+                                            :timeframe,
+                                            :dataformat,
+                                            :data )
+
       @data_sets[data_set] = loader_cleaner(loader)
     end
     # parse_data(loader)
@@ -36,6 +39,7 @@ class EconomicProfileRepository
       @data_sets.each do |data_name, data_set|
         economic_profile[data_name] = collect_data(name, data_set)
       end
+      binding.pry
       @economic_profiles << EconomicProfile.new(economic_profile)
     end
     @data_sets
@@ -46,7 +50,6 @@ class EconomicProfileRepository
       all_names |= data_set[1].map { |line| line[:location] }
     end
   end
-
 
   def collect_data(name, data_set)
     temp = []
@@ -65,6 +68,4 @@ class EconomicProfileRepository
   def find_by_name(name)
     @economic_profiles.find { |economic_profile| economic_profile.name == name }
   end
-
-
 end

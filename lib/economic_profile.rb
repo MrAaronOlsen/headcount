@@ -4,6 +4,7 @@ class EconomicProfile
   attr_reader :data
   def initialize(data)
     @data = data
+    binding.pry
   end
 
   def name
