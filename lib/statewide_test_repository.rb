@@ -11,8 +11,8 @@ class StatewideTestRepository
     return nil if args[:statewide_testing].nil?
 
     args[:statewide_testing].each do |data_set, address|
-      loader = Load.new(address).load_data( :location, :score, :race_ethnicity, :timeframe,
-                                            :dataformat, :data )
+      loader = Load.new(address).load_data( :location, :score, :race_ethnicity,
+                                            :timeframe,:dataformat, :data )
       @data_sets[data_set] = loader_cleaner(loader)
     end
     build_statewide_tests
