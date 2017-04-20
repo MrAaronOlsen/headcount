@@ -298,7 +298,7 @@ class HeadcountAnalystTest < MiniTest::Test
     actual = ha.find_growths_by_subject(minmax, :math)
 
     actual.each do |dist, growth|
-      assert_in_delta expected[dist], growth, 0.005
+      assert_in_delta expected[dist], growth[0], 0.005
     end
   end
 
@@ -359,7 +359,7 @@ class HeadcountAnalystTest < MiniTest::Test
                 [["ACADEMY 20", -0.009], ["BAYFIELD 10 JT-R", 0.012]]]
 
     ha.collect_growth_across_all_subjects(3)[0].each_with_index do |line, i|
-      assert_in_delta expected[0][i][1], line[1], 0.005
+      assert_in_delta expected[0][i][1], line[1][0], 0.005
     end
 
     ha.collect_growth_across_all_subjects(3)[0].each_with_index do |line, i|
@@ -376,7 +376,7 @@ class HeadcountAnalystTest < MiniTest::Test
 
     expected = ["BAYFIELD 10 JT-R", 0.006537777777777777]
 
-    assert_equal ha.find_top_growth_by_grade(3), expected
+    assert_equal ha.find_top_growth_by_grade(3, nil), expected
   end
 
 
@@ -393,6 +393,19 @@ class HeadcountAnalystTest < MiniTest::Test
 
     assert_equal "OURAY R-1", ha.top_statewide_test_year_over_year_growth(grade: 8).first
     assert_in_delta 0.11, ha.top_statewide_test_year_over_year_growth(grade: 8).last, 0.005
+  end
+
+  def test_weighting_results_by_subject
+    dr = DistrictRepository.new
+    dr.load_data(:statewide_testing => {
+                    :third_grade => "./data/3rd grade students scoring proficient or above on the CSAP_TCAP.csv",
+                    :eighth_grade => "./data/8th grade students scoring proficient or above on the CSAP_TCAP.csv" })
+
+    ha = HeadcountAnalyst.new(dr)
+
+    top_performer = ha.top_statewide_test_year_over_year_growth(grade: 8, :weighting => {:math => 0.5, :reading => 0.5, :writing => 0.0})
+    assert_equal "OURAY R-1", top_performer.first
+    assert_in_delta 0.153, top_performer.last, 0.005
   end
 
 end
