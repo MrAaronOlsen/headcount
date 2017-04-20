@@ -48,7 +48,7 @@ class EconomicProfileRepository
   def collect_median_household_income(data_name, data_set, name)
     by_name = data_set.select { |line| line[:location] == name }
     by_name.hash_map do |line|
-        {time_range(line[:timeframe]) => line[:data]}
+        {time_range(line[:timeframe]) => line[:data].to_i}
     end
   end
 
@@ -72,7 +72,7 @@ class EconomicProfileRepository
     end
 
     numbers = number.hash_map do |line|
-      {line[:timeframe].to_i => { number: line[:data].to_f } }
+      {line[:timeframe].to_i => { total: line[:data].to_f } }
     end
     numbers.merge(percents) { |date, d1, d2| d1.update(d2) }
   end
